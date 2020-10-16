@@ -12,8 +12,8 @@ var rtcPeerConnection;
 
 var iceServers={
 	'iceServers':[
-		{'url':'stun:stun.l.google.com:19302'},
-    {'url':'turn:turn.l.google.com:19302'}
+		{'url':'stun:stun.services.mozilla.com'},
+		{'url':'stun:stun.l.google.com:19302'}
 ]
 }
 

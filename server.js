@@ -1,3 +1,4 @@
+port = process.env.PORT || 3000;
 const express = require('express');
 const app = express();
 var http = require('http').Server(app);
@@ -47,6 +48,6 @@ socket.on('create or join',function(room){
 });
 
 
-http.listen(3000,function(){
+http.listen(port,function(){
 	console.log('listening on: 3000');
 });

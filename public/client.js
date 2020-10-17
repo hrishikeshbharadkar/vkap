@@ -14,7 +14,7 @@ var iceServers={
 	'iceServers':[
 		{'url':'stun:stun.services.mozilla.com'},
 		{'url':'stun:stun.l.google.com:19302'},
-     {'urls': 'turn:https://vkap-deploy.herokuapp.com:3478?transport=tcp',
+     {'urls': 'turn:192.168.100.187:3478?transport=tcp',
     'credential': 'test',
     'username': 'test'
     }    

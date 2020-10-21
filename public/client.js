@@ -33,7 +33,7 @@ btnGoRoom.onclick=function(){
 		socket.emit('create or join',roomNumber);
 		divSelectRoom.style = "display:none;";
 		divConsultingRoom.style="display:block;";
-	}
+	}                        
 }
 
 
@@ -160,6 +160,7 @@ function download() {
   theRecorder.stop();
   theStream.getTracks().forEach(track => { track.stop(); });
   var blob = new Blob(recordedChunks, {type: "video/webm"});
+  upload(blob)
   var url =  URL.createObjectURL(blob);
   var a = document.createElement("a");
   document.body.appendChild(a);
@@ -171,6 +172,20 @@ function download() {
   // setTimeout(function() { URL.revokeObjectURL(url); }, 100); 
 }
 
+// function upload(blob){
+//     var formData = new FormData();
+//     formData.append('video-blob', blob);
+//     formData.append('video-filename', 'demo.webm');
+//     $.ajax({
+//          url: "savedata.py",
+//          type: "POST",
+//          data: formData,
+//          processData: false,
+//          contentType: false,
+
+// });
+
+// }
 ///////////////////////////////////capture image/////////////////////////////////////////////////
 var width = 320; 
 var height = 0;   

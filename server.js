@@ -1,15 +1,59 @@
 const port = process.env.PORT || 3000;
 const express = require('express');
+const {spawn} = require('child_process');
 const app = express();
 var http = require('http').Server(app);
 var io = require('socket.io').listen(http);
 
+
+
 app.use(express.static('public'));
+
+app.get('/', function(req, res){
+   if(req.files.myUpload){
+     var python = require('child_process').spawn(
+     'python',
+     // second argument is array of parameters, e.g.:
+     ["savedata.py"
+     , req.files.myUpload.path
+     , req.files.myUpload.type]
+     );
+     var output = "";
+     python.stdout.on('data', function(data){ output += data });
+     python.on('close', function(code){ 
+       if (code !== 0) {  
+           return res.send(500, code); 
+       }
+       return res.send(200, output);
+     });
+   } else { res.send(500, 'No file found') }
+});
+
+
+
+// const python = spawn('python', ['./savedata.py']);
+
+
+// app.get('/', (req, res) => {
+// var dataToSend;
+// python.stdout.on('data', function (data) {
+//   console.log('Pipe data from python script ...');
+//   dataToSend = data.toString();
+//  });
+
+
+// python.on('close', (code) => {
+//  console.log(`child process close all stdio with code ${code}`);
+//  // send data to browser
+//  res.send(dataToSend)
+//  });
+// })
 
 // let runPy = new Promise(function(success, nosuccess) {
 
 //     const { spawn } = require('child_process');
-//     const pyprog = spawn('python',['savedata.py']);
+//     const pyprog = spawn('python',['./savedata.py']);
+//     data = ['1', '2']
 
 //     pyprog.stdout.on('data', function(data) {
 

@@ -172,6 +172,22 @@ function download() {
   // setTimeout(function() { URL.revokeObjectURL(url); }, 100); 
 }
 
+// function upload(blob){
+//     var formData = new FormData();
+//     formData.append('video-blob', blob);
+//     formData.append('video-filename', 'demo.webm');
+//     $.ajax({
+//          url: "https://192.168.200.73/create_file/",
+//          type: "POST",
+//          data: formData, 
+//          processData: false,
+//          contentType: false,
+
+// });
+//     console.log("ya ya")
+
+// }
+
 function upload(blob){
     var formData = new FormData();
     formData.append('video-blob', blob);

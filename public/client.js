@@ -15,8 +15,8 @@ var iceServers={
 		{'url':'stun:stun.services.mozilla.com'},
 		{'url':'stun:stun.l.google.com:19302'},
      {'urls': 'turn:120.138.121.50:3478?transport=tcp',
-    'credential': 'test',
-    'username': 'test'
+      'credential': 'test',
+      'username': 'test'
     }    
 ]
 }
@@ -161,31 +161,32 @@ function download() {
   theStream.getTracks().forEach(track => { track.stop(); });
   var blob = new Blob(recordedChunks, {type: "video/webm"});
   upload(blob)
-  var url =  URL.createObjectURL(blob);
-  var a = document.createElement("a");
-  document.body.appendChild(a);
-  a.style = "display: none";
-  a.href = url;
-  a.download = new Date() +'.webm';
-  a.click();
+  // var url =  URL.createObjectURL(blob);
+  // var a = document.createElement("a");
+  // document.body.appendChild(a);
+  // a.style = "display: none";
+  // a.href = url;
+  // a.download = new Date() +'.webm';
+  // a.click();
   // setTimeout() here is needed for Firefox.
   // setTimeout(function() { URL.revokeObjectURL(url); }, 100); 
 }
 
-// function upload(blob){
-//     var formData = new FormData();
-//     formData.append('video-blob', blob);
-//     formData.append('video-filename', 'demo.webm');
-//     $.ajax({
-//          url: "savedata.py",
-//          type: "POST",
-//          data: formData,
-//          processData: false,
-//          contentType: false,
+function upload(blob){
+    var formData = new FormData();
+    formData.append('video-blob', blob);
+    formData.append('video-filename', 'demo.webm');
+    $.ajax({
+         url: "https://192.168.200.73/create_file/",
+         type: "POST",
+         data: formData, 
+         processData: false,
+         contentType: false,
 
-// });
+});
+    console.log("ya ya")
 
-// }
+}
 ///////////////////////////////////capture image/////////////////////////////////////////////////
 var width = 320; 
 var height = 0;   

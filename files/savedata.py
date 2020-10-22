@@ -1,6 +1,7 @@
 import os 
 
 def create_file(request):
+
     if request.method == 'POST':
         filename = request.POST.get('video-filename', '')
         file = request.FILES.get('video-blob', '')
@@ -8,7 +9,8 @@ def create_file(request):
                 if not os.path.exists('static/video-msg/'):
                         os.mkdir('static/video-msg/')
 
-                with open('static/video-msg/' + filename, 'wb+') as destination:
+                with open('static/video-msg/' + filename, 'wb+') as
+destination:
                         for chunk in file.chunks():
                                 destination.write(chunk)
                 return HttpResponse('Created!')
@@ -17,4 +19,3 @@ def create_file(request):
 
     else:
         return HttpResponse("No Request given")
-

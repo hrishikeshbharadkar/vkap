@@ -6,6 +6,34 @@ var io = require('socket.io').listen(http);
 
 app.use(express.static('public'));
 
+// let runPy = new Promise(function(success, nosuccess) {
+
+//     const { spawn } = require('child_process');
+//     const pyprog = spawn('python',['savedata.py']);
+
+//     pyprog.stdout.on('data', function(data) {
+
+//         success("running python",data);
+//     });
+
+//     pyprog.stderr.on('data', (data) => {
+
+//         nosuccess("no python",data);
+//     });
+// }).catch(function (error) {
+//        console.log(error);
+//   	});
+
+// app.get('/', (req, res) => {
+
+//     res.write('welcome\n');
+
+//     runPy.then(function(create_file) {
+//     	console.log(create_file.toString());
+//         res.end(create_file);
+//     });
+// });
+
 io.on('connection',function(socket){
 	console.log('a user connected');
 socket.on('create or join',function(room){

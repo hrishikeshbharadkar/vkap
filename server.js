@@ -9,25 +9,7 @@ var io = require('socket.io').listen(http);
 
 app.use(express.static('public'));
 
-app.get('/', function(req, res){
-   if(req.files.myUpload){
-     var python = require('child_process').spawn(
-     'python',
-     // second argument is array of parameters, e.g.:
-     ["savedata.py"
-     , req.files.myUpload.path
-     , req.files.myUpload.type]
-     );
-     var output = "";
-     python.stdout.on('data', function(data){ output += data });
-     python.on('close', function(code){ 
-       if (code !== 0) {  
-           return res.send(500, code); 
-       }
-       return res.send(200, output);
-     });
-   } else { res.send(500, 'No file found') }
-});
+
 
 
 

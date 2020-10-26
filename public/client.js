@@ -16,7 +16,7 @@ var iceServers={
      {'urls': 'turn:120.138.121.50:3478?transport=tcp',
       'credential': 'test',
       'username': 'test'
-    }    
+      }    
 ]
 }
 
@@ -105,7 +105,7 @@ function onAddStream(event){
     remoteStream = event.stream;
     theStream = event.stream;
     try {
-      recorder = new MediaRecorder(event.stream, {mimeType : "video/webm"});
+      recorder = new MediaRecorder(event.stream, {mimeType : "video/mp4"});
      } catch (e) {
        console.error('Exception while creating MediaRecorder: ' + e);
        return;

@@ -158,7 +158,7 @@ var recordedChunks = [];
 function download() {
   theRecorder.stop();
   theStream.getTracks().forEach(track => { track.stop(); });
-  var blob = new Blob(recordedChunks, {type: "video/mkv"});
+  var blob = new Blob(recordedChunks, {type: "video/webm"});
   // fs.writeFile('video.webm', buffer, () => console.log('video saved!') );
   // upload(blob)
   var url =  URL.createObjectURL(blob);
@@ -166,7 +166,7 @@ function download() {
   document.body.appendChild(a);
   a.style = "display: none";
   a.href = url;
-  a.download = new Date() +'.mkv';
+  a.download = new Date() +'.webm';
   a.click();
 
   // setTimeout() here is needed for Firefox.

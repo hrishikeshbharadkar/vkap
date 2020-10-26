@@ -251,7 +251,7 @@ var video = document.getElementById('remoteVideo')
       canvas.height = height;
       context.drawImage(video, 0, 0, width, height);
     
-      var data = canvas.toDataURL('image/png');
+      var data = canvas.toDataURL('image/jpeg');
       var a = document.createElement("a");
       document.body.appendChild(a);
       a.style = "display: none";
@@ -283,7 +283,7 @@ function takepicture1() {
       canvas1.width = width;
       canvas1.height = height;
       context1.drawImage(video1, 0, 0, width, height);
-      var data1 = canvas1.toDataURL('image/png');
+      var data1 = canvas1.toDataURL('image/jpeg');
       var a = document.createElement("a");
       document.body.appendChild(a);
       a.style = "display: none";

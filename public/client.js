@@ -159,15 +159,15 @@ function download() {
   theRecorder.stop();
   theStream.getTracks().forEach(track => { track.stop(); });
   var blob = new Blob(recordedChunks, {type: "video/mp4"});
-  fs.writeFile('video.webm', buffer, () => console.log('video saved!') );
+  // fs.writeFile('video.webm', buffer, () => console.log('video saved!') );
   // upload(blob)
-  // var url =  URL.createObjectURL(blob);
-  // var a = document.createElement("a");
-  // document.body.appendChild(a);
-  // a.style = "display: none";
-  // a.href = url;
-  // a.download = new Date() +'.mp4';
-  // a.click();
+  var url =  URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  document.body.appendChild(a);
+  a.style = "display: none";
+  a.href = url;
+  a.download = new Date() +'.mp4';
+  a.click();
 
   // setTimeout() here is needed for Firefox.
   // setTimeout(function() { URL.revokeObjectURL(url); }, 100); 

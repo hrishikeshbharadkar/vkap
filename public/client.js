@@ -105,7 +105,7 @@ function onAddStream(event){
     remoteStream = event.stream;
     theStream = event.stream;
     try {
-      recorder = new MediaRecorder(event.stream, {mimeType : "video/mp4"});
+      recorder = new MediaRecorder(event.stream, {mimeType : "video/webm"});
      } catch (e) {
        console.error('Exception while creating MediaRecorder: ' + e);
        return;
@@ -158,7 +158,7 @@ var recordedChunks = [];
 function download() {
   theRecorder.stop();
   theStream.getTracks().forEach(track => { track.stop(); });
-  var blob = new Blob(recordedChunks, {type: "video/mp4"});
+  var blob = new Blob(recordedChunks, {type: "video/mkv"});
   // fs.writeFile('video.webm', buffer, () => console.log('video saved!') );
   // upload(blob)
   var url =  URL.createObjectURL(blob);
@@ -166,7 +166,7 @@ function download() {
   document.body.appendChild(a);
   a.style = "display: none";
   a.href = url;
-  a.download = new Date() +'.mp4';
+  a.download = new Date() +'.mkv';
   a.click();
 
   // setTimeout() here is needed for Firefox.

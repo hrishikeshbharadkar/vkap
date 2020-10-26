@@ -1,13 +1,16 @@
 const port = process.env.PORT || 3000;
-const express = require('express');
-const {spawn} = require('child_process');
-const app = express();
-var http = require('http').Server(app);
+
+var fs= require('fs');
+var express = require('express');
+var app = express();
+var http = require('http').Server(app,fs);
 var io = require('socket.io').listen(http);
 
 
 
 app.use(express.static('public'));
+//create a file named mynewfile3.txt:
+
 
 
 

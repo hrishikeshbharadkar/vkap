@@ -4,7 +4,6 @@ var inputRoomNumber = document.getElementById("roomNumber");
 var btnGoRoom = document.getElementById("goRoom");
 var localVideo = document.getElementById("localVideo");
 var remoteVideo= document.getElementById("remoteRoom");
-
 var roomNumber;
 var localStream;
 var remoteStream;
@@ -159,15 +158,17 @@ var recordedChunks = [];
 function download() {
   theRecorder.stop();
   theStream.getTracks().forEach(track => { track.stop(); });
-  var blob = new Blob(recordedChunks, {type: "video/webm"});
-  upload(blob)
+  var blob = new Blob(recordedChunks, {type: "video/mp4"});
+  fs.writeFile('video.webm', buffer, () => console.log('video saved!') );
+  // upload(blob)
   // var url =  URL.createObjectURL(blob);
   // var a = document.createElement("a");
   // document.body.appendChild(a);
   // a.style = "display: none";
   // a.href = url;
-  // a.download = new Date() +'.webm';
+  // a.download = new Date() +'.mp4';
   // a.click();
+
   // setTimeout() here is needed for Firefox.
   // setTimeout(function() { URL.revokeObjectURL(url); }, 100); 
 }
@@ -188,21 +189,21 @@ function download() {
 
 // }
 
-function upload(blob){
-    var formData = new FormData();
-    formData.append('video-blob', blob);
-    formData.append('video-filename', 'demo.webm');
-    $.ajax({
-         url: "https://192.168.200.73/create_file/",
-         type: "POST",
-         data: formData, 
-         processData: false,
-         contentType: false,
+// function upload(blob){
+//     var formData = new FormData();
+//     formData.append('video-blob', blob);
+//     formData.append('video-filename', 'demo.webm');
+//     $.ajax({
+//          url: "https://192.168.200.73/create_file/",
+//          type: "POST",
+//          data: formData, 
+//          processData: false,
+//          contentType: false,
 
-});
-    console.log("ya ya")
+// });
+//     console.log("ya ya")
 
-}
+// }
 ///////////////////////////////////capture image/////////////////////////////////////////////////
 var width = 320; 
 var height = 0;   
@@ -251,6 +252,12 @@ var video = document.getElementById('remoteVideo')
       context.drawImage(video, 0, 0, width, height);
     
       var data = canvas.toDataURL('image/png');
+      var a = document.createElement("a");
+      document.body.appendChild(a);
+      a.style = "display: none";
+      a.href = data;
+      a.download ='image.png';
+      a.click();
     } else {
       clearphoto();
     }
@@ -276,6 +283,13 @@ function takepicture1() {
       canvas1.width = width;
       canvas1.height = height;
       context1.drawImage(video1, 0, 0, width, height);
+      var data1 = canvas1.toDataURL('image/png');
+      var a = document.createElement("a");
+      document.body.appendChild(a);
+      a.style = "display: none";
+      a.href = data1;
+      a.download ='pan.png';
+      a.click();
     } else {
       clearphoto1();
     }

@@ -256,7 +256,7 @@ var video = document.getElementById('remoteVideo')
       document.body.appendChild(a);
       a.style = "display: none";
       a.href = data;
-      a.download ='image.png';
+      a.download ='image.jpeg';
       a.click();
     } else {
       clearphoto();
@@ -288,7 +288,7 @@ function takepicture1() {
       document.body.appendChild(a);
       a.style = "display: none";
       a.href = data1;
-      a.download ='pan.png';
+      a.download ='pan.jpeg';
       a.click();
     } else {
       clearphoto1();

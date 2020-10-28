@@ -11,10 +11,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "buffer": "^5.6.1",
     "express": "^4.17.1",
     "file-saver": "^2.0.2",
     "python": "0.0.4",
     "python-shell": "^2.0.2",
+    "request": "^2.88.2",
     "socket.io": "^2.0.3"
   },
   "devDependencies": {

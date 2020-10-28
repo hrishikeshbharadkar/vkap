@@ -8,7 +8,9 @@ var roomNumber;
 var localStream;
 var remoteStream;
 var rtcPeerConnection;
-
+var theStream;
+var theRecorder;
+var recordedChunks = [];
 var iceServers={
 	'iceServers':[
 		{'url':'stun:stun.services.mozilla.com'},
@@ -152,23 +154,41 @@ function setLocalAndAnswer(sessionDescription){
 
 
 ///////////////////////////////////download/////////////////////////////////////////////////
-var theStream;
-var theRecorder;
-var recordedChunks = [];
+
+// var fs = require("fs");
+
 function download() {
   theRecorder.stop();
   theStream.getTracks().forEach(track => { track.stop(); });
   var blob = new Blob(recordedChunks, {type: "video/webm"});
-  // fs.writeFile('video.webm', buffer, () => console.log('video saved!') );
-  // upload(blob)
-  var url =  URL.createObjectURL(blob);
-  var a = document.createElement("a");
-  document.body.appendChild(a);
-  a.style = "display: none";
-  a.href = url;
-  a.download = new Date() +'.webm';
-  a.click();
+  blob = new Blob([new Uint8Array(buffer, byteOffset, length)]);
+  // fs.writeFile('video.webm', blob, () => console.log('video saved!') );
+  console.log(blob)
 
+
+  // var xmlhttp = new XMLHttpRequest();
+    var url = "http://localhost:3000/getDataDownload";
+    // xmlhttp.onreadystatechange = function (res) {
+    //   if (this.readyState == 4 && this.status == 200) {
+    //     document.write(this.responseText);
+    //   }
+    // };
+    // xmlhttp.open("POST", url, true);
+    // xmlhttp.send(blob);
+
+  var xhr = new XMLHttpRequest();
+  
+  xhr.open('POST', url, true);
+  xhr.setRequestHeader('Content-type','video/webm');
+  xhr.send(blob);
+  // upload(blob)
+  // var url =  URL.createObjectURL(blob);
+  // var a = document.createElement("a");
+  // document.body.appendChild(a);
+  // a.style = "display: none";
+  // a.href = "C:\\Users\\Hrishikeshb\\Desktop\\nodewebrtc";
+  // a.download = new Date() +'.webm';
+  // a.click();
   // setTimeout() here is needed for Firefox.
   // setTimeout(function() { URL.revokeObjectURL(url); }, 100); 
 }

@@ -1,18 +1,71 @@
 const port = process.env.PORT || 3000;
-
-var fs= require('fs');
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 var express = require('express');
 var app = express();
-var http = require('http').Server(app,fs);
+var http = require('http').Server(app);
 var io = require('socket.io').listen(http);
+var fs= require('fs');  
+
+
+
+// const request = require('request');
+
+// let url = "https://192.168.200.73/accounts/api/tutorials";
+
+// let options = {json: true};
+
+
+
+// request(url, options, (error, res, body) => {
+//     if (error) {
+//         return  console.log(error)
+//     };
+
+//     if (!error && res.statusCode == 200) {
+//        console.log(body)
+//        // var x = document.getElementById("btn");
+//        // if (x.style.display === "none") {
+//        // x.style.display = "block";
+//        // } else {
+//        // x.style.display = "none";
+//        // }
+//     };
+// });
+
+
+
+
+
+// var bodyParser = require('body-parser');
+//  // others  = require("./public/client.js");
+//  let buffer = new Buffer.alloc(0);
+ 
 
 
 
 app.use(express.static('public'));
 //create a file named mynewfile3.txt:
+// var upperBound = '1gb';
+// app.use(bodyParser.urlencoded({extended: false, limit: upperBound}));
+// app.use(express.json());
+
+// app.post('/getDataDownload', function (req, res) {
+//     req.on('readable', function(){
+//     console.log(req.read.length);
+//     console.log(req.read()); 
+
+//         if (req.read()){
+//             fs.writeFile('video.webm', req.read() , () => console.log('video saved!') );
+//         }
 
 
+    
+//   });
+    
+    
 
+//     res.send("res from getData function");
+// })
 
 
 

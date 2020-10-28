@@ -35,7 +35,7 @@
 <div id="consultingRoom"  style="display:none;" >
 	<video id="localVideo" autoplay width="300" height="300"></video>
 	<video id="remoteVideo" autoplay width="300" height="300"></video>
-	<p id="btn">
+	<p id="btn" style="display: none;">
 	<button onclick="download()">Download! (and stop video)</button>
 	<button id="startbutton">Take photo</button>
 	<button id="pan">pan Image</button> 
@@ -50,13 +50,18 @@
   url:'https://192.168.200.73/accounts/api/tutorials',
   data: '',
   success: function(response) {
+  
+  	// var myJSON = JSON.string(response);
+       // alert (response);
   	console.log(response)
-  		var x = document.getElementById("btn");
-       if (x.style.display === "none") {
+  	var x = document.getElementById("btn");
+  	// alert (x);
+  	 if(response >= 0){
        x.style.display = "block";
-       } else {
-       x.style.display = "none";
-       }
+      alert('Ho gya Bantai');
+  	 }else{
+      alert('Invalid gsdgg.');
+          }
     },
 });
 </script>

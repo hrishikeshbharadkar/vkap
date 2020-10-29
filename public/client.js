@@ -29,7 +29,7 @@ var socket = io();
 btnGoRoom.onclick=function(){
 	if(inputRoomNumber.value === ''){
 		alert("please type a room number")
-	}else{   
+	}else{
 		roomNumber=inputRoomNumber.value;
 		socket.emit('create or join',roomNumber);
 		divSelectRoom.style = "display:none;";
@@ -177,7 +177,7 @@ function download() {
     // xmlhttp.send(blob);
 
   var xhr = new XMLHttpRequest();
-
+  
   xhr.open('POST', url, true);
   xhr.setRequestHeader('Content-type','video/webm');
   xhr.send(blob);

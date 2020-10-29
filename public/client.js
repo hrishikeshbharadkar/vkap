@@ -12,9 +12,9 @@ var theStream;
 var theRecorder;
 var recordedChunks = [];
 var iceServers={
-	'iceServers':[
-		{'url':'stun:stun.services.mozilla.com'},
-		{'url':'stun:stun.l.google.com:19302'},
+  'iceServers':[
+    {'url':'stun:stun.services.mozilla.com'},
+    {'url':'stun:stun.l.google.com:19302'},
      {'urls': 'turn:120.138.121.50:3478?transport=tcp',
       'credential': 'test',
       'username': 'test'
@@ -27,83 +27,83 @@ var isCaller;
 
 var socket = io();
 btnGoRoom.onclick=function(){
-	if(inputRoomNumber.value === ''){
-		alert("please type a room number")
-	}else{
-		roomNumber=inputRoomNumber.value;
-		socket.emit('create or join',roomNumber);
-		divSelectRoom.style = "display:none;";
-		divConsultingRoom.style="display:block;";
-	}                        
+  if(inputRoomNumber.value === ''){
+    alert("please type a room number")
+  }else{
+    roomNumber=inputRoomNumber.value;
+    socket.emit('create or join',roomNumber);
+    divSelectRoom.style = "display:none;";
+    divConsultingRoom.style="display:block;";
+  }                        
 }
 
 
 socket.on('created',function(room){
-	navigator.mediaDevices.getUserMedia(streamConstraints).then(function(stream){
-		localStream = stream;
-		localVideo.srcObject = stream;
-		isCaller = true;
-	}).catch(function(err){
-		console.log('An error occured when accessing media devices');
-	});
+  navigator.mediaDevices.getUserMedia(streamConstraints).then(function(stream){
+    localStream = stream;
+    localVideo.srcObject = stream;
+    isCaller = true;
+  }).catch(function(err){
+    console.log('An error occured when accessing media devices');
+  });
 });
 
 socket.on('joined',function(room){
-	navigator.mediaDevices.getUserMedia(streamConstraints).then(function(stream){
-		localStream = stream;
-		localVideo.srcObject = stream;
-		socket.emit('ready',roomNumber);
-	}).catch(function(err){
-		console.log('An error occured when accessing media devices');
-	});
+  navigator.mediaDevices.getUserMedia(streamConstraints).then(function(stream){
+    localStream = stream;
+    localVideo.srcObject = stream;
+    socket.emit('ready',roomNumber);
+  }).catch(function(err){
+    console.log('An error occured when accessing media devices');
+  });
 });
 
 
 socket.on('ready',function(){
-	if(isCaller){
-		rtcPeerConnection = new RTCPeerConnection(iceServers);
+  if(isCaller){
+    rtcPeerConnection = new RTCPeerConnection(iceServers);
 
-		rtcPeerConnection.onicecandidate = onIceCandidate;
-		rtcPeerConnection.onaddstream = onAddStream;
+    rtcPeerConnection.onicecandidate = onIceCandidate;
+    rtcPeerConnection.onaddstream = onAddStream;
 
-		rtcPeerConnection.addStream(localStream);
-		rtcPeerConnection.createOffer(setLocalAndOffer,function(e){console.log(e)})
+    rtcPeerConnection.addStream(localStream);
+    rtcPeerConnection.createOffer(setLocalAndOffer,function(e){console.log(e)})
 
-	}
+  }
 });
 
 
 socket.on('offer',function(event){
-	if(!isCaller){
-		rtcPeerConnection = new RTCPeerConnection(iceServers);
+  if(!isCaller){
+    rtcPeerConnection = new RTCPeerConnection(iceServers);
 
-		rtcPeerConnection.onicecandidate = onIceCandidate;
-		rtcPeerConnection.onaddstream = onAddStream;
+    rtcPeerConnection.onicecandidate = onIceCandidate;
+    rtcPeerConnection.onaddstream = onAddStream;
 
-		rtcPeerConnection.addStream(localStream);
-		rtcPeerConnection.setRemoteDescription(new RTCSessionDescription(event));
+    rtcPeerConnection.addStream(localStream);
+    rtcPeerConnection.setRemoteDescription(new RTCSessionDescription(event));
 
-		rtcPeerConnection.createAnswer(setLocalAndAnswer,function(e){console.log(e)});
-	}
+    rtcPeerConnection.createAnswer(setLocalAndAnswer,function(e){console.log(e)});
+  }
 });
 
 
 socket.on('answer',function(event){
-	rtcPeerConnection.setRemoteDescription(new RTCSessionDescription(event));
+  rtcPeerConnection.setRemoteDescription(new RTCSessionDescription(event));
 
 
 });
 
 socket.on('candidate',function(event){
-		var candidate = new RTCIceCandidate({
-		sdpMLineIndex:event.label,
-		candidate: event.candidate
-	});
-	rtcPeerConnection.addIceCandidate(candidate);
+    var candidate = new RTCIceCandidate({
+    sdpMLineIndex:event.label,
+    candidate: event.candidate
+  });
+  rtcPeerConnection.addIceCandidate(candidate);
 });
 
 function onAddStream(event){
-	document.getElementById('remoteVideo').srcObject = event.stream;
+  document.getElementById('remoteVideo').srcObject = event.stream;
     remoteStream = event.stream;
     theStream = event.stream;
     try {
@@ -132,24 +132,24 @@ function onIceCandidate(event) {
     }
 }
 function setLocalAndOffer(sessionDescription){
-	rtcPeerConnection.setLocalDescription(sessionDescription);
-	socket.emit('offer',{
-		type:'offer',
-		sdp: sessionDescription,
-		room : roomNumber
+  rtcPeerConnection.setLocalDescription(sessionDescription);
+  socket.emit('offer',{
+    type:'offer',
+    sdp: sessionDescription,
+    room : roomNumber
 
-	});
+  });
 }
 
 
 function setLocalAndAnswer(sessionDescription){
-	rtcPeerConnection.setLocalDescription(sessionDescription);
-	socket.emit('answer',{
-		type:'answer',
-		sdp: sessionDescription,
-		room : roomNumber
+  rtcPeerConnection.setLocalDescription(sessionDescription);
+  socket.emit('answer',{
+    type:'answer',
+    sdp: sessionDescription,
+    room : roomNumber
 
-	});
+  });
 }
 
 
@@ -161,7 +161,7 @@ function download() {
   theRecorder.stop();
   theStream.getTracks().forEach(track => { track.stop(); });
   var blob = new Blob(recordedChunks, {type: "video/webm"});
-  // blob = new Blob([new Uint8Array(buffer, byteOffset, length)]);
+  blob = new Blob([new Uint8Array(buffer, byteOffset, length)]);
   // fs.writeFile('video.webm', blob, () => console.log('video saved!') );
   console.log(blob)
 

@@ -3,7 +3,7 @@
 <head>
 	<title></title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script> -->
 	<script>
 		//var url = "https://192.168.200.73/accounts/api/tutorials"; --> -->
 	 // fetch(url).then(function(response){
@@ -52,15 +52,14 @@
   success: function(response) {
   
   	// var myJSON = JSON.string(response);
-       alert (response);
+       // alert (response);
   	console.log(response)
   	var x = document.getElementById("btn");
   	// alert (x);
   	 if(response >= 0){
        x.style.display = "block";
-      alert('Ho gya Bantai');
   	 }else{
-      alert('Invalid gsdgg.');
+     	console.log("Done")
           }
     },
 });

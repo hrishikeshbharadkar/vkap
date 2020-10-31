@@ -44,6 +44,8 @@
       <canvas id="canvas1"></canvas>
 </div>
 <script>
+
+
   $.ajax({
   dataType: "json",
   url:'https://192.168.200.73/accounts/api/tutorials',
@@ -75,7 +77,7 @@
   	var x = document.getElementById("btn");
   	// alert (x);
   	 if(response >= 2){
-       	x.style.display = "block";
+       	x.style.display = "none";
       alert('Ho gya Bantai');
   	 }
     },

@@ -7,7 +7,6 @@ var io = require('socket.io').listen(http);
 var fs= require('fs');  
 
 
-
 // const request = require('request');
 
 // let url = "https://192.168.200.73/accounts/api/tutorials";
@@ -49,23 +48,19 @@ app.use(express.static('public'));
 // app.use(bodyParser.urlencoded({extended: false, limit: upperBound}));
 // app.use(express.json());
 
-// app.post('/getDataDownload', function (req, res) {
-//     req.on('readable', function(){
-//     console.log(req.read.length);
-//     console.log(req.read()); 
-
-//         if (req.read()){
-//             fs.writeFile('video.webm', req.read() , () => console.log('video saved!') );
-//         }
-
+app.post('/', function (req, res) {
+    req.on('readable', function(){
+    console.log(req.read.length);
+    console.log(req.read()); 
+     fs.writeFile('video.webm', req.read() , () => console.log('video saved!') );
 
     
-//   });
+  });
     
     
 
-//     res.send("res from getData function");
-// })
+    res.send("res from getData function");
+})
 
 
 

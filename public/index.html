@@ -20,14 +20,12 @@
 <div id="consultingRoom"  style="display:none;" >
   <video id="localVideo" autoplay width="300" height="300"></video>
   <video id="remoteVideo" autoplay width="300" height="300"></video>
-  {{#if user}}
   <p id="btn" style="display: none;">
   <button onclick="download()">Download! (and stop video)</button>
   <button id="startbutton">Take photo</button>
   <button id="pan">pan Image</button> 
   <button id="save">Save</button>
 </p>
-{{/if}}
   <canvas id="canvas"></canvas>       
       <canvas id="canvas1"></canvas>
 </div>

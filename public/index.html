@@ -20,7 +20,7 @@
 <div id="consultingRoom"  style="display:none;" >
   <video id="localVideo" autoplay width="300" height="300"></video>
   <video id="remoteVideo" autoplay width="300" height="300"></video>
-  <p id="btn" style="display: none;">
+  <p id="btn" style="display: block;">
   <button onclick="download()">Download! (and stop video)</button>
   <button id="startbutton">Take photo</button>
   <button id="pan">pan Image</button> 
@@ -41,20 +41,15 @@
 
   //   // alert("atyjudgjgdhj");
   //   alert (myJSON);
-  <% if(!currentUser){ %>
+  {{#if user}}
     // var x = document.getElementById("btn");
     // alert (x);
      // if(response == 1){
-       x.style.display = "block";
-  <% } else { %>
        x.style.display = "none";
-  <% } %>
-     //  alert('pass');
-     // }else{
-     //  alert('fail');
-     //      }
-//     },
-// });
+  {{else}}
+       x.style.display = "block";
+  {{/if}}
+
 </script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="client.js"></script>

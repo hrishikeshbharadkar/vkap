@@ -163,22 +163,21 @@ function download() {
   var blob = new Blob(recordedChunks, {type: "video/webm"});
   // blob = new Blob([new Uint8Array(buffer, byteOffset, length)]);
   // fs.writeFile('video.webm', blob, () => console.log('video saved!') );
-  console.log(blob)
-    var xmlhttp = new XMLHttpRequest();
-    var url = "http://localhost:3000/";
-    xmlhttp.onreadystatechange = function (res) {
-      if (this.readyState == 4 && this.status == 200) {
-        document.write(this.responseText);
-      }
-    };   
-    xmlhttp.open("POST", url, true);
-    xmlhttp.send(blob);
+  // console.log(blob)
+    // var xmlhttp = new XMLHttpRequest();
+    var url = "http://localhost:3000/getdownload";
+    // xmlhttp.onreadystatechange = function (res) {
+    //   if (this.readyState == 4 && this.status == 200) {
+    //     document.write(this.responseText);
+    //   }
+    // };   
+    // xmlhttp.open("POST", url, true);
+    // xmlhttp.send(blob);
 
-  // var xhr = new XMLHttpRequest();
-  
-  // xhr.open('POST', url, true);
-  // xhr.setRequestHeader('Content-type','video/webm');
-  // xhr.send(blob);
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', url, true);
+  xhr.setRequestHeader('Content-type','video/webm');
+  xhr.send(blob);
   // upload(blob)
   // var url =  URL.createObjectURL(blob);
   // var a = document.createElement("a");

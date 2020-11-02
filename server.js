@@ -48,19 +48,60 @@ app.use(express.static('public'));
 // app.use(bodyParser.urlencoded({extended: false, limit: upperBound}));
 // app.use(express.json());
 
-app.post('/', function (req, res) {
-    req.on('readable', function(){
-    console.log(req.read.length);
-    console.log(req.read()); 
-     fs.writeFile('video.webm', req.read() , () => console.log('video saved!') );
+const maxFileSize = 1024 * 1024 * 50; // 50 MB
+let contentBuffer = [];
+let totalBytesInBuffer = 0;
+
+app.post('/getdownload', function (req, res) {
+    req.on('data', chunk => {
+      contentBuffer.push(chunk);
+      totalBytesInBuffer += chunk.length;
+      
+      console.log('contentBuffer', contentBuffer)
+
+      // Look to see if the file size is too large.
+      if (totalBytesInBuffer > maxFileSize) {
+        req.pause();
+
+        res.header('Connection', 'close');
+        res.status(413).json({error: `The file size exceeded the limit of ${maxFileSize} bytes`});
+
+        req.connection.destroy();
+      }
+    });
+
+    req.on('aborted', function() {
+      // Nothing to do with buffering, garbage collection will clean everything up.
+    });
+    
+    req.on('end', async function() {
+      contentBuffer = Buffer.concat(contentBuffer, totalBytesInBuffer);
+      
+      console.log("end buffer", contentBuffer)
+      
+      try{ 
+            fs.writeFile(Date.now()+'.webm', contentBuffer , () => console.log('video saved!') );
+      } catch (err) {
+          
+          console.log(err);
+          
+      }
+    });
+});
+
+// app.post('/getdownload', function (req, res) {
+//     req.on('readable', function(){
+//     console.log(req.read.length);
+//     console.log(req.read()); 
+//      fs.writeFile('video.webm', req.read() , () => console.log('video saved!') );
 
     
-  });
+//   });
     
     
 
-    res.send("res from getData function");
-})
+//     res.send("res from getData function");
+// })
 
 
 

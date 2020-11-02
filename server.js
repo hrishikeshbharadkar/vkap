@@ -7,6 +7,29 @@ var io = require('socket.io').listen(http);
 var fs= require('fs');  
 
 
+let connection;
+var oracledb = require('oracledb');
+
+(async function() {
+try{
+   connection = await oracledb.getConnection({
+        user : 'VKYC',
+        password : 'adroit11',
+        connectString : '192.168.100.110:1521/orcl12'
+   });
+   console.log("Successfully connected to Oracle!")
+} catch(err) {
+    console.log("Error: ", err);
+  } finally {
+    if (connection) {
+      try {
+        await connection.close();
+      } catch(err) {
+        console.log("Error when closing the database connection: ", err);
+      }
+    }
+  }
+})()
 // const request = require('request');
 
 // let url = "https://192.168.200.73/accounts/api/tutorials";

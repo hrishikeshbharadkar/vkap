@@ -26,6 +26,7 @@
 </div>
  <script>
   $.ajax({
+  type: 'GET',
   dataType: "json",
   url:'https://192.168.200.73/accounts/api/tutorials',
   data: '',
@@ -33,9 +34,8 @@
   
     // var myJSON = JSON.string(response);
 
-    alert("dgfdfgdgdgdgfdgdffgf");
+    alert("api working");
     alert (response);
-    console.log(response);
     var x = document.getElementById("btn");
     // alert (x);
      if(response == 'root'){

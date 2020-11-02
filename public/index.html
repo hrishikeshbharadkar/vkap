@@ -30,12 +30,9 @@
   dataType: "json",
   url:'https://192.168.200.73/accounts/api/tutorials',
   data: '',
-  success: function(data) {
-    alert("1st")
-    if(data.user){
-
-      alert("2nsd");
-    }
+  success: function(response) {
+    alert("1st",response);
+   
     // var myJSON = JSON.string(response);
 
     // alert("atyjudgjgdhj");

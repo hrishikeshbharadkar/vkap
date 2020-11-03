@@ -20,7 +20,7 @@ var iceServers={
 ]
 }
 
-var streamConstraints ={audio:{ echoCancellation: false },video:true};
+var streamConstraints ={audio:{ echoCancellation: true },video:true};
 var isCaller;
 
 var socket = io();
@@ -40,6 +40,7 @@ socket.on('created',function(room){
   navigator.mediaDevices.getUserMedia(streamConstraints).then(function(stream){
     localStream = stream;
     localVideo.srcObject = stream;
+    localVideo.muted = true;
     isCaller = true;
   }).catch(function(err){
     console.log('An error occured when accessing media devices');
@@ -50,7 +51,6 @@ socket.on('joined',function(room){
   navigator.mediaDevices.getUserMedia(streamConstraints).then(function(stream){
     localStream = stream;
     localVideo.srcObject = stream;
-    localVideo.muted = true;
     socket.emit('ready',roomNumber);
   }).catch(function(err){
     console.log('An error occured when accessing media devices');

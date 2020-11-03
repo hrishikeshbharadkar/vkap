@@ -20,7 +20,7 @@ var iceServers={
 ]
 }
 
-var streamConstraints ={audio:true,audio:{ echoCancellation: true } };
+var streamConstraints ={audio:{ echoCancellation: true },video:true};
 var isCaller;
 
 var socket = io();

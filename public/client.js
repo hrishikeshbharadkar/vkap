@@ -178,6 +178,7 @@ function download() {
   xhr.open('POST', url, true);
   xhr.setRequestHeader('Content-type','video/webm');
   xhr.send(blob);
+  alert('video saved in local ');
   // upload(blob)
   // var url =  URL.createObjectURL(blob);
   // var a = document.createElement("a");

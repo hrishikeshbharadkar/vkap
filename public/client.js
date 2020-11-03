@@ -20,7 +20,7 @@ var iceServers={
 ]
 }
 
-var streamConstraints ={audio:true,video:true};
+var streamConstraints ={audio:true,audio:{ echoCancellation: true } };
 var isCaller;
 
 var socket = io();
@@ -50,6 +50,7 @@ socket.on('joined',function(room){
   navigator.mediaDevices.getUserMedia(streamConstraints).then(function(stream){
     localStream = stream;
     localVideo.srcObject = stream;
+    localVideo.muted = true;
     socket.emit('ready',roomNumber);
   }).catch(function(err){
     console.log('An error occured when accessing media devices');
@@ -176,7 +177,6 @@ function download() {
 
   var xhr = new XMLHttpRequest();
   xhr.open('POST', url, true);
-  xhr.setRequestHeader('Content-type','video/webm');
   xhr.send(blob);
   alert('video saved in local ');
   // upload(blob)

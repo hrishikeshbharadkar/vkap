@@ -39,8 +39,8 @@ btnGoRoom.onclick=function(){
 socket.on('created',function(room){
   navigator.mediaDevices.getUserMedia(streamConstraints).then(function(stream){
     localStream = stream;
-    localVideo.srcObject = stream;
     localVideo.muted = true;
+    localVideo.srcObject = stream;
     isCaller = true;
   }).catch(function(err){
     console.log('An error occured when accessing media devices');

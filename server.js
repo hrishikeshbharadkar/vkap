@@ -5,6 +5,25 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io').listen(http);
 var fs= require('fs');  
+var multer  = require('multer')
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads');
+    },
+    filename: (req, file, cb) => {
+        console.log(file);
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype == 'image/jpeg' || file.mimetype == 'image/png') {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+}
+const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 
 let connection;
@@ -103,13 +122,64 @@ app.post('/getdownload', function (req, res) {
       console.log("end buffer", contentBuffer)
       
       try{ 
-            fs.writeFile(Date.now()+'.webm', contentBuffer , () => console.log('video saved!') );
+            fs.writeFile('D:/videos/'+Date.now()+'.webm', contentBuffer , () => console.log('video saved!') );
       } catch (err) {
           
           console.log(err);
           
       }
     });
+});
+
+
+
+app.post('/uploadPicture', upload.single('Picture'), function (req, res) {
+  var img = req.body.Picture;
+  var data = img.replace(/^data:image\/\w+;base64,/, "");
+  var buf = new Buffer(data, 'base64');
+  
+  try{ 
+      fs.writeFile('D:/face_images/'+Date.now()+'.jpeg', buf , () => console.log('Picture saved!') );
+      return res.status(201).json({
+        message: 'Face image Uploaded successfully'
+      });
+    } catch (err) {
+      console.log(err);
+    }
+     
+});
+
+
+app.post('/uploadPicture1', upload.single('Picture1'), function (req, res) {
+  var img = req.body.Picture1;
+  var data = img.replace(/^data:image\/\w+;base64,/, "");
+  var buf = new Buffer(data, 'base64');
+  
+  try{ 
+      fs.writeFile('D:/pan_images/'+Date.now()+'.jpeg',buf , () => console.log('Picture saved!') );
+      return res.status(201).json({
+        message: 'Pan image uploaded successfully'
+      });
+    } catch (err) {
+      console.log(err);
+    }
+     
+});
+
+app.post('/uploadPicture2', upload.single('Picture2'), function (req, res) {
+  var img = req.body.Picture2;
+  var data = img.replace(/^data:image\/\w+;base64,/, "");
+  var buf = new Buffer(data, 'base64');
+  
+  try{ 
+      fs.writeFile('D:/'+Date.now()+'.jpeg', buf , () => console.log('Picture saved!') );
+      return res.status(201).json({
+        message: 'Signature image uplodeded successfully'
+      });
+    } catch (err) {
+      console.log(err);
+    }
+     
 });
 
 // app.post('/getdownload', function (req, res) {

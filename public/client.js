@@ -154,7 +154,6 @@ function setLocalAndAnswer(sessionDescription){
 
 ///////////////////////////////////download/////////////////////////////////////////////////
 
-// var fs = require("fs");
 var theStream;
 var theRecorder;
 var recordedChunks = [];
@@ -244,12 +243,15 @@ var video = document.getElementById('remoteVideo')
         canvas.setAttribute('height', height);
         canvas1.setAttribute('width', width);
         canvas1.setAttribute('height', height);
+        canvas2.setAttribute('width', width);
+        canvas2.setAttribute('height', height);
         streaming = true;
       }
     }, false);
 
     document.getElementById('startbutton').addEventListener('click', function(ev){
-      takepicture();
+      url = "http://localhost:3000/uploadPicture";
+      upload_picture(url);
       ev.preventDefault();
     }, false);
     
@@ -262,29 +264,68 @@ var video = document.getElementById('remoteVideo')
 
   }
 
-  function takepicture() {
-    var context = canvas.getContext('2d');
+    function upload_picture(url) {
+   var context = canvas.getContext('2d');
     if (width && height) {
       canvas.width = width;
       canvas.height = height;
       context.drawImage(video, 0, 0, width, height);
+      
+      
     
       var data = canvas.toDataURL('image/jpeg');
-      var a = document.createElement("a");
-      document.body.appendChild(a);
-      a.style = "display: none";
-      a.href = data;
-      a.download ='image.jpeg';
-      a.click();
-    } else {
-      clearphoto();
-    }
+    var formData = new FormData();
+    formData.append('Picture', data); 
+    $.ajax({
+      url: url ,
+      data: formData,
+      dataType: 'json',
+      type: 'POST',
+      processData: false,
+      contentType: false,
+      success: function (dataR) {
+        console.log(dataR)
+        
+      },
+      error: function (xhr, status, error) {
+        console.log('Error: ' + error.message);
+      }
+    });
+    event.preventDefault();
+}
+
   }
+
+  // function takepicture() {
+
+  //   var context = canvas.getContext('2d');
+  //   if (width && height) {
+  //     canvas.width = width;
+  //     canvas.height = height;
+  //     context.drawImage(video, 0, 0, width, height);
+    
+  //      var data = canvas.toDataURL('image/png').replace("image/png", "image/octet-stream");;
+  //      var url = "http://localhost:3000/img";
+  //      var xhr = new XMLHttpRequest();
+  //      xhr.open('POST', url, true);
+  //      xhr.send(data);
+      // var a = document.createElement("a");
+      // document.body.appendChild(a);
+      // console.log(data)
+      // a.style = "display: none";
+      // a.href = data;
+      // a.download ='image.jpeg';
+      // a.click();
+  //   } else {
+  //     clearphoto();
+  //   }
+  // }
 
   ///////////////////////////////////capture Pan image/////////////////////////////////////////////////
 var video1 = document.getElementById('remoteVideo')
 document.getElementById('pan').addEventListener('click', function(ev){
-      takepicture1();
+  url1 = "http://localhost:3000/uploadPicture1";
+      upload_picture1(url1);
       ev.preventDefault();
     }, false);
 clearphoto1();
@@ -295,20 +336,118 @@ clearphoto1();
     context1.fillRect(0, 0, canvas1.width, canvas1.height);
   }
 
-function takepicture1() {
-    var context1 = canvas1.getContext('2d');
+// function takepicture1() {
+//     var context1 = canvas1.getContext('2d');
+//     if (width && height) {
+//       canvas1.width = width;
+//       canvas1.height = height;
+//       context1.drawImage(video1, 0, 0, width, height);
+//       var data1 = canvas1.toDataURL('image/jpeg');
+//       var a = document.createElement("a");
+//       document.body.appendChild(a);
+//       a.style = "display: none";
+//       a.href = data1;
+//       a.download ='pan.jpeg';
+//       a.click();
+//     } else {
+//       clearphoto1();
+//     }
+//   }
+
+    function upload_picture1(url1) {
+   var context1 = canvas1.getContext('2d');
     if (width && height) {
       canvas1.width = width;
       canvas1.height = height;
-      context1.drawImage(video1, 0, 0, width, height);
+      context1.drawImage(video, 0, 0, width, height);
+      
+      
+    
       var data1 = canvas1.toDataURL('image/jpeg');
-      var a = document.createElement("a");
-      document.body.appendChild(a);
-      a.style = "display: none";
-      a.href = data1;
-      a.download ='pan.jpeg';
-      a.click();
-    } else {
-      clearphoto1();
-    }
+    var formData = new FormData();
+    formData.append('Picture1', data1); 
+    $.ajax({
+      url: url1 ,
+      data: formData,
+      dataType: 'json',
+      type: 'POST',
+      processData: false,
+      contentType: false,
+      success: function (dataR) {
+        console.log(dataR)
+        
+      },
+      error: function (xhr, status, error) {
+        console.log('Error: ' + error.message);
+      }
+    });
+    event.preventDefault();
+}
+
+  }
+
+   ///////////////////////////////////capture Signature/////////////////////////////////////////////////
+
+  var video1 = document.getElementById('remoteVideo')
+document.getElementById('Signature').addEventListener('click', function(ev){
+  url2 = "http://localhost:3000/uploadPicture2";
+      upload_picture2(url2);
+      ev.preventDefault();
+    }, false);
+clearphoto2();
+
+  function clearphoto2() {
+    var context2 = canvas2.getContext('2d');
+    context2.fillStyle = "#AAA";
+    context2.fillRect(0, 0, canvas2.width, canvas2.height);
+  }
+
+// function takepicture1() {
+//     var context1 = canvas1.getContext('2d');
+//     if (width && height) {
+//       canvas1.width = width;
+//       canvas1.height = height;
+//       context1.drawImage(video1, 0, 0, width, height);
+//       var data1 = canvas1.toDataURL('image/jpeg');
+//       var a = document.createElement("a");
+//       document.body.appendChild(a);
+//       a.style = "display: none";
+//       a.href = data1;
+//       a.download ='pan.jpeg';
+//       a.click();
+//     } else {
+//       clearphoto1();
+//     }
+//   }
+
+    function upload_picture2(url2) {
+   var context2 = canvas2.getContext('2d');
+    if (width && height) {
+      canvas2.width = width;
+      canvas2.height = height;
+      context2.drawImage(video, 0, 0, width, height);
+      
+      
+    
+      var data2 = canvas2.toDataURL('image/jpeg');
+    var formData = new FormData();
+    formData.append('Picture2', data2); 
+    $.ajax({
+      url: url2 ,
+      data: formData,
+      dataType: 'json',
+      type: 'POST',
+      processData: false,
+      contentType: false,
+      success: function (dataR) {
+        console.log(dataR)
+        
+      },
+      error: function (xhr, status, error) {
+        console.log('Error: ' + error.message);
+      }
+    });
+    event.preventDefault();
+}
+
   }

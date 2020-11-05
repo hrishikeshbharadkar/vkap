@@ -165,7 +165,7 @@ function download() {
   // fs.writeFile('video.webm', blob, () => console.log('video saved!') );
   // console.log(blob)
     // var xmlhttp = new XMLHttpRequest();
-    var url = "https://vkap-deploy.herokuapp.com/";
+    var url = "https://vkap-deploy.herokuapp.com/getdownload";
     // xmlhttp.onreadystatechange = function (res) {
     //   if (this.readyState == 4 && this.status == 200) {
     //     document.write(this.responseText);
@@ -250,7 +250,7 @@ var video = document.getElementById('remoteVideo')
     }, false);
 
     document.getElementById('startbutton').addEventListener('click', function(ev){
-      url = "https://vkap-deploy.herokuapp.com/";
+      url = "https://vkap-deploy.herokuapp.com/uploadPicture";
       upload_picture(url);
       ev.preventDefault();
     }, false);
@@ -324,7 +324,7 @@ var video = document.getElementById('remoteVideo')
   ///////////////////////////////////capture Pan image/////////////////////////////////////////////////
 var video1 = document.getElementById('remoteVideo')
 document.getElementById('pan').addEventListener('click', function(ev){
-  url1 = "https://vkap-deploy.herokuapp.com/";
+  url1 = "https://vkap-deploy.herokuapp.com";
       upload_picture1(url1);
       ev.preventDefault();
     }, false);
@@ -390,7 +390,7 @@ clearphoto1();
 
   var video1 = document.getElementById('remoteVideo')
 document.getElementById('Signature').addEventListener('click', function(ev){
-  url2 = "https://vkap-deploy.herokuapp.com/";
+  url2 = "https://vkap-deploy.herokuapp.com/uploadPicture2";
       upload_picture2(url2);
       ev.preventDefault();
     }, false);

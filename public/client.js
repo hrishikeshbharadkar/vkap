@@ -277,7 +277,7 @@ var video = document.getElementById('remoteVideo')
       document.body.appendChild(a);//normal download
       a.style = "display: none";//normal download
       a.href = data;//normal download
-      a.download ='pan.jpeg';//normal download
+      a.download ='face.jpeg';//normal download
       a.click();//normal download
     // var formData = new FormData();//auto download
     // formData.append('Picture', data); //auto download
@@ -446,7 +446,7 @@ clearphoto2();
       document.body.appendChild(a);
       a.style = "display: none";
       a.href = data2;
-      a.download ='pan.jpeg';
+      a.download ='Signature.jpeg';
       a.click();//normal download
     // var formData = new FormData();//auto download
     // formData.append('Picture2', data2); 

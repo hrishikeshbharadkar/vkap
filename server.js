@@ -94,7 +94,7 @@ const maxFileSize = 1024 * 1024 * 50; // 50 MB
 let contentBuffer = [];
 let totalBytesInBuffer = 0;
 
-app.post('/getdownload', function (req, res) {
+app.post('/', function (req, res) {
     req.on('data', chunk => {
       contentBuffer.push(chunk);
       totalBytesInBuffer += chunk.length;
@@ -133,7 +133,7 @@ app.post('/getdownload', function (req, res) {
 
 
 
-app.post('/uploadPicture', upload.single('Picture'), function (req, res) {
+app.post('/', upload.single('Picture'), function (req, res) {
   var img = req.body.Picture;
   var data = img.replace(/^data:image\/\w+;base64,/, "");
   var buf = new Buffer(data, 'base64');
@@ -150,7 +150,7 @@ app.post('/uploadPicture', upload.single('Picture'), function (req, res) {
 });
 
 
-app.post('/uploadPicture1', upload.single('Picture1'), function (req, res) {
+app.post('/', upload.single('Picture1'), function (req, res) {
   var img = req.body.Picture1;
   var data = img.replace(/^data:image\/\w+;base64,/, "");
   var buf = new Buffer(data, 'base64');
@@ -166,7 +166,7 @@ app.post('/uploadPicture1', upload.single('Picture1'), function (req, res) {
      
 });
 
-app.post('/uploadPicture2', upload.single('Picture2'), function (req, res) {
+app.post('/', upload.single('Picture2'), function (req, res) {
   var img = req.body.Picture2;
   var data = img.replace(/^data:image\/\w+;base64,/, "");
   var buf = new Buffer(data, 'base64');

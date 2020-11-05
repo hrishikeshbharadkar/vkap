@@ -48,7 +48,7 @@ try{
       }
     }
   }
-})()
+})
 // const request = require('request');
 
 // let url = "https://192.168.200.73/accounts/api/tutorials";

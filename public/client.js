@@ -152,7 +152,7 @@ function setLocalAndAnswer(sessionDescription){
 }
 
 
-///////////////////////////////////download/////////////////////////////////////////////////
+///////////////////////////////////video download/////////////////////////////////////////////////
 
 var theStream;
 var theRecorder;
@@ -165,7 +165,7 @@ function download() {
   // fs.writeFile('video.webm', blob, () => console.log('video saved!') );
   // console.log(blob)
     // var xmlhttp = new XMLHttpRequest();
-    var url = "https://vkap-deploy.herokuapp.com/getdownload";
+    var url = "https://vkap-deploy.herokuapp.com/getdownload";//auto download
     // xmlhttp.onreadystatechange = function (res) {
     //   if (this.readyState == 4 && this.status == 200) {
     //     document.write(this.responseText);
@@ -174,18 +174,17 @@ function download() {
     // xmlhttp.open("POST", url, true);
     // xmlhttp.send(blob);
 
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', url, true);
-  xhr.send(blob);
-  alert('video saved in local ');
-  // upload(blob)
-  // var url =  URL.createObjectURL(blob);
-  // var a = document.createElement("a");
-  // document.body.appendChild(a);
-  // a.style = "display: none";
-  // a.href = "C:\\Users\\Hrishikeshb\\Desktop\\nodewebrtc";
-  // a.download = new Date() +'.webm';
-  // a.click();
+  // var xhr = new XMLHttpRequest();//auto download
+  // xhr.open('POST', url, true);//auto download
+  // xhr.send(blob);//auto download
+  // alert('video saved in local ');//auto download
+  var url =  URL.createObjectURL(blob);//normal download
+  var a = document.createElement("a");
+  document.body.appendChild(a);
+  a.style = "display: none";
+  a.href = url;
+  a.download = new Date() +'.webm';
+  a.click();//normal download
   // setTimeout() here is needed for Firefox.
   // setTimeout(function() { URL.revokeObjectURL(url); }, 100); 
 }
@@ -274,23 +273,29 @@ var video = document.getElementById('remoteVideo')
       
     
       var data = canvas.toDataURL('image/jpeg');
-    var formData = new FormData();
-    formData.append('Picture', data); 
-    $.ajax({
-      url: url ,
-      data: formData,
-      dataType: 'json',
-      type: 'POST',
-      processData: false,
-      contentType: false,
-      success: function (dataR) {
-        console.log(dataR)
+     var a = document.createElement("a");//normal download
+      document.body.appendChild(a);//normal download
+      a.style = "display: none";//normal download
+      a.href = data1;//normal download
+      a.download ='pan.jpeg';//normal download
+      a.click();//normal download
+    // var formData = new FormData();//auto download
+    // formData.append('Picture', data); //auto download
+    // $.ajax({//auto download
+    //   url: url ,//auto download
+    //   data: formData,//auto download
+    //   dataType: 'json',//auto download
+    //   type: 'POST',//auto download
+    //   processData: false,//auto download
+    //   contentType: false,//auto download
+    //   success: function (dataR) {//auto download
+    //     console.log(dataR)//auto download
         
-      },
-      error: function (xhr, status, error) {
-        console.log('Error: ' + error.message);
-      }
-    });
+    //   },//auto download
+    //   error: function (xhr, status, error) {//auto download
+    //     console.log('Error: ' + error.message);//auto download
+    //   }
+    // });//auto download
     event.preventDefault();
 }
 
@@ -363,24 +368,31 @@ clearphoto1();
       
       
     
-      var data1 = canvas1.toDataURL('image/jpeg');
-    var formData = new FormData();
-    formData.append('Picture1', data1); 
-    $.ajax({
-      url: url1 ,
-      data: formData,
-      dataType: 'json',
-      type: 'POST',
-      processData: false,
-      contentType: false,
-      success: function (dataR) {
-        console.log(dataR)
+      var data1 = canvas1.toDataURL('image/jpeg');//auto download
+
+     var a = document.createElement("a");//normal download
+      document.body.appendChild(a);
+      a.style = "display: none";
+      a.href = data1;
+      a.download ='pan.jpeg';
+      a.click();//normal download
+    // var formData = new FormData();
+    // formData.append('Picture1', data1); 
+    // $.ajax({
+    //   url: url1 ,
+    //   data: formData,
+    //   dataType: 'json',
+    //   type: 'POST',
+    //   processData: false,
+    //   contentType: false,
+    //   success: function (dataR) {
+    //     console.log(dataR)
         
-      },
-      error: function (xhr, status, error) {
-        console.log('Error: ' + error.message);
-      }
-    });
+    //   },
+    //   error: function (xhr, status, error) {
+    //     console.log('Error: ' + error.message);
+    //   }
+    // });//auto download
     event.preventDefault();
 }
 
@@ -430,23 +442,29 @@ clearphoto2();
       
     
       var data2 = canvas2.toDataURL('image/jpeg');
-    var formData = new FormData();
-    formData.append('Picture2', data2); 
-    $.ajax({
-      url: url2 ,
-      data: formData,
-      dataType: 'json',
-      type: 'POST',
-      processData: false,
-      contentType: false,
-      success: function (dataR) {
-        console.log(dataR)
+      var a = document.createElement("a");//normal download
+      document.body.appendChild(a);
+      a.style = "display: none";
+      a.href = data1;
+      a.download ='pan.jpeg';
+      a.click();//normal download
+    // var formData = new FormData();//auto download
+    // formData.append('Picture2', data2); 
+    // $.ajax({
+    //   url: url2 ,
+    //   data: formData,
+    //   dataType: 'json',
+    //   type: 'POST',
+    //   processData: false,
+    //   contentType: false,
+    //   success: function (dataR) {
+    //     console.log(dataR)
         
-      },
-      error: function (xhr, status, error) {
-        console.log('Error: ' + error.message);
-      }
-    });
+    //   },
+    //   error: function (xhr, status, error) {
+    //     console.log('Error: ' + error.message);
+    //   }
+    // });//auto download
     event.preventDefault();
 }
 

@@ -1,60 +1,129 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title></title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script>
-    function show() {
-    document.getElementById("btn").style.display = "block";
-}
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script> -->
+	<style>
+		.border{
+    border:1px solid black;
+				}
+		.container {
+				  position: absolute;
+				  left: 0;
+				  right: 0;
+				  top: 50%;
+				  transform: translateY(-50%);
+							}
+
+	</style>
+	<script>
+// 		 var input = document.getElementByTagName("roomNumber");
+// 		 debugger;
+// input.addEventListener("keyup", function(event) {
+//   if (event.keyCode === 13) {
+//    event.preventDefault();
+//    document.getElementById("goRoom").click();
+//   }});
+		//var url = "https://192.168.200.73/accounts/api/tutorials"; --> -->
+	 // fetch(url).then(function(response){
+	 	// console.log(body)
+	 // }).catch(function (err) {
+
+ // });
+
+    //  $.getJSON(url, function(data) {
+        
+    //     var text = `is_active:${data}<br>`
+                    
+        
+    //     $(".mypanel").html(text);
+    // });
+       // $(document).ready(function () {
+       //    alert(y);
+       //  });
 </script>
 </head>
 <body>
-  <!-- <div id="mypanel"></div> -->
-<div id="selectRoom">
-  <label>Type the room number</label>
-  <input id="roomNumber" type="text"/>
-  <button id="goRoom">Go</button>
-</div>
+	<!-- <div id="mypanel"></div> -->
 
-<div id="consultingRoom"  style="display:none;" >
-  <video id="localVideo" autoplay width="300" height="300"  muted="muted"></video>
-  <video id="remoteVideo" autoplay width="300" height="300"></video>
-  <p id="btn" style="display: block;">
-  <button onclick="download()">Download! (and stop video)</button>
-  <button id="startbutton">Take photo</button>
-  <button id="pan">Capture pan</button> 
-  <button id="Signature">Capture Signature</button> 
-</p>
-  <canvas id="canvas"></canvas>       
+<!-- 	<div class="row border">
+		<div class="col-md-5 col-xs-3">
+	<label class="col-form-label">Type the Room No.:</label>
+		</div>
+		<div class="col-md-4 col-xs-2">
+	<input id="roomNumber" type="text" class="form-control"/>
+</div>
+<div class="col-md-4 col-xs-3">
+	<button id="goRoom" class="btn btn-sm btn-outline-primary">Go</button>
+</div>
+</div> -->
+<form>
+<div id="selectRoom" class="container">
+ 				 <div class="row">
+    				<div class="col-md-4 mx-auto">
+    				<!-- 	<div class="form-group">
+						<div class="input-group">						
+						<input id="roomNumber" type="text" class="form-control" placeholder="Enter Room Number" required>
+							<span id="goRoom" class="input-group-addon">
+							<span class="fa fa-arrow-right"></span>
+							</span>
+						</div>
+					</div> -->
+					<div class="input-group mb-3">
+        <input type="text" id="roomNumber" class="form-control" placeholder="Enter Room Number" aria-label="Enter Room Number"
+        aria-describedby="basic-addon2"/>
+        <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon2">
+            	<span id="goRoom" class="fa fa-arrow-right"></span>
+            </span>
+        </div>
+    </div>
+					</div>
+				</div>
+			</div>
+</form>
+<div id="consultingRoom"  style="display:none;" class="container">
+	<div class="col-md-6 col-xs-6 mx-auto">
+	<div class="row">
+		<div class="col-md-6 col-xs-6">
+	<video id="localVideo" class="img-fluid" width="320" height="240" autoplay></video>
+		</div>
+		<div class="col-md-6 col-xs-6">
+	<video id="remoteVideo" class="img-fluid" autoplay></video>
+	</div>
+</div>
+</div>
+	<p id="btn" style="display: none;">
+	<button onclick="download()">Download! (and stop video)</button>
+	<button id="startbutton">Take photo</button>
+	<button id="pan">pan Image</button> 
+	<button id="save">Save</button>
+	<canvas id="canvas"></canvas>       
       <canvas id="canvas1"></canvas>
-      <canvas id="canvas2"></canvas>
+</p>
+	
 </div>
- <script>
-  //$.ajax({
-  // type: 'GET',
-  // dataType: "json",
-  // url:'https://192.168.200.73/accounts/api/tutorials',
-  // data: '',
-  // success: function(response) {
-    
-  //   var myJSON = JSON.stringify(response);
-
-  //   // alert("atyjudgjgdhj");
-  //   alert (myJSON);
-
-    // var x = document.getElementById("btn");
-    // // alert (x);
-    //  if(response == 1){
-    //    x.style.display = "block";
-    //   alert('pass');
-    //  }else{
-    //   alert('fail');
-    //       }
-//     },
-// });
+<script>
+  $.ajax({
+  dataType: "json",
+  url:'https://192.168.200.73/accounts/api/tutorials',
+  data: '',
+  success: function(response) {
+  	console.log(response)
+  	var x = document.getElementById("btn");
+  	 if(response >= 0){
+       x.style.display = "block";
+  	 }else{
+     	alert("invalid")
+          }
+    },
+});
 </script>
 <script src="/socket.io/socket.io.js"></script>
+
 <script src="client.js"></script>
 </body>
 </html>

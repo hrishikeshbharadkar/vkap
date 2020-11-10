@@ -400,7 +400,7 @@ clearphoto1();
 
    ///////////////////////////////////capture Signature/////////////////////////////////////////////////
 
-  var video1 = document.getElementById('remoteVideo')
+  var video1 = document.getElementById('remoteVideo');
 document.getElementById('Signature').addEventListener('click', function(ev){
   url2 = "https://vkap-deploy.herokuapp.com/uploadPicture2";
       upload_picture2(url2);

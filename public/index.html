@@ -39,11 +39,11 @@
     console.log(response);
     var x = document.getElementById("btn");
     alert(response)
-     if(response!='null'){
-       x.style.display = "block";
+     if(response=='null'){
+       x.style.display = "none";
        alert("valid")
      }else{
-       x.style.display = "none";
+       x.style.display = "block";
       alert("invalid")
           }
     },

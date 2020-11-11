@@ -115,11 +115,12 @@
   	console.log(response)
   	var x = document.getElementById("btn");
     alert(response);
-  	 if(response=='root'){
+  	 if(response!='null'){
        x.style.display = "block";
+       alert(response);
   	 }else{
        x.style.display = "none";
-     	alert("invalid")
+     	alert("invalid");
           }
     },
 });

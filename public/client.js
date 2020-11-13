@@ -115,7 +115,7 @@ function onAddStream(event){
      recorder.ondataavailable = 
          (event) => { recordedChunks.push(event.data); };
      recorder.start(100);
-     console.log("recorded")
+     console.log("recorded");
 }
 
 function onIceCandidate(event) {
@@ -469,3 +469,8 @@ clearphoto2();
 }
 
   }
+
+
+
+var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+console.log(fullUrl);

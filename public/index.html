@@ -119,7 +119,7 @@
 </div>
 
 </form>
- <script>
+ <!-- <script>
   $.ajax({
   dataType: "json",
   url:'https://192.168.200.73/accounts/api/tutorials',
@@ -137,7 +137,7 @@
           }
     },
 });
-</script>
+</script> -->
 <!-- <script>
 //Make the DIV element draggagle:
 dragElement(document.getElementById("mydiv"));
@@ -189,10 +189,10 @@ function dragElement(elmnt) {
   alert("Adroit1"+window.location.href);
   var url = window.location.href;
   let params = new URLSearchParams(url.search);
-  var value1 = params.get('params1');
-  alert('im in user'+value1);
-  var value = params.get('params2');
-  alert('im in customer'+value);
+  var value1 = params.get('param1');
+  alert('im in user :-'+value1);
+  var value = params.get('param2');
+  alert('im in customer :-'+value);
   // alert("Adroit2"+window.location.hostname);
 </script>
 </body>

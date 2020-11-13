@@ -293,3 +293,13 @@ socket.on('create or join',function(room){
 http.listen(port,function(){
 	console.log('listening on: 3000');
 });
+
+// let app=express();
+app.use ((req, res, next) => {
+    res.locals.url = req.originalUrl;
+    res.locals.host = req.get('host');
+    res.locals.protocol = req.protocol;
+    console.log('im in');
+    next();
+    
+});

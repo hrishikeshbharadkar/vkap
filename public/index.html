@@ -26,13 +26,44 @@
           top: 50%;
           transform: translateY(-50%);
               }
-
+          #mydivheader {
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  background-color: #2196F3;
+  color: #fff;
+}
+#mydiv {
+    position: absolute;
+  z-index: 9;
+  background-color: #f1f1f1;
+  text-align: center;
+  border: 1px solid #d3d3d3;
+}
+#localVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
+}
+.content {
+  position: fixed;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: #f1f1f1;
+  width: 100%;
+  padding: 20px;
+}
+#mydiv{top: 0;left:0}      
   </style>
   <script>
     function show() {
     document.getElementById("btn").style.display = "block";
 }
 </script>
+
+
 <body>
 <form>
 <div id="selectRoom" class="container">
@@ -61,17 +92,24 @@
 </form>
 
 <div id="consultingRoom"  style="display:none;" >
-  <video id="localVideo" autoplay width="300" height="300"  muted="muted"></video>
-  <video id="remoteVideo" autoplay width="300" height="300"></video>
+  <video id="localVideo" autoplay muted="muted"></video>
+ <div id="mydiv" class="col-md-2 p-0">
+  <div id="mydivheader">Drag</div>
+   <video id="remoteVideo" class="container-fluid p-0" autoplay></video>
+</div>
+  <div class="content"> 
   <p id="btn" style="display: block;">
-  <button onclick="download()">Download! (and stop video)</button>
-  <button id="startbutton">Take photo</button>
-  <button id="pan">Capture pan</button> 
-  <button id="Signature">Capture Signature</button> 
+    <div class="text-center">
+  <button style="border-radius: 50%" onclick="download()" class="btn btn-circle btn-outline-secondary btn-sm"><span title="Download! (and stop video)" class="fa fa-times text-danger fa-2x">
+  </span></button>
+  <button style="border-radius: 50%" id="startbutton" class="btn btn-circle btn-outline-secondary btn-sm"><span title="Take photo" class="fa fa-camera-retro text-danger fa-2x"></span></button>
+  <button id="pan" style="border-radius: 50%" class="btn bg-transparent btn-outline-secondary btn-rounded btn-sm"><span title="Capture PAN" class="fa fa-image text-danger fa-2x"></span></button> 
+  <button id="Signature" style="border-radius: 50%" class="btn btn-outline-secondary btn-rounded btn-sm"><span title="Capture Signature" class="fa fa-google-wallet text-danger fa-2x"></span></button> 
 </p>
-  <canvas id="canvas"></canvas>       
+      <canvas id="canvas"></canvas>       
       <canvas id="canvas1"></canvas>
       <canvas id="canvas2"></canvas>
+  </div>
 </div>
  <script>
   $.ajax({
@@ -91,6 +129,51 @@
           }
     },
 });
+</script>
+<script>
+//Make the DIV element draggagle:
+dragElement(document.getElementById("mydiv"));
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    /* if present, the header is where you move the DIV from:*/
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  } else {
+    /* otherwise, move the DIV from anywhere inside the DIV:*/
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    /* stop moving when mouse button is released:*/
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
 </script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="client.js"></script>

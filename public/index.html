@@ -48,6 +48,17 @@
   width: 100%;
   padding: 20px;
 }
+#cover {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+#cover-caption {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
 #mydiv{top: 0;right:0}      
   </style>
   <script>
@@ -55,12 +66,13 @@
     document.getElementById("btn").style.display = "block";
 }
 </script>
-
-
 <body>
 <form>
-      <div id="selectRoom" class="container">
-         <div class="row">
+  <section id="cover" class="min-vh-100">
+        <div id="cover-caption">
+            <div class="container">
+                    <div class="mx-auto text-center">
+                          <div id="selectRoom">
             <div class="col-md-8 col-xs-10 col-sm-12 mx-auto">
             <!--  <div class="form-group">
             <div class="input-group">           
@@ -80,11 +92,12 @@
         </div>
     </div>
           </div>
-        </div>
       </div>
-</form>
-
-<div id="consultingRoom" class="col-md-12 col-xs-9 p-0" style="display:none;">
+                    </div>
+                </div>
+            </div>          
+        </section>
+          <div id="consultingRoom" class="coontainer-fluid col-xs-9 p-0" style="display:none;">
   <video id="localVideo" autoplay muted="muted"></video>
  <div id="mydiv" class="col-md-2 col-xs-6 p-0">
   <div id="mydivheader"></div>
@@ -99,12 +112,15 @@
   <button id="pan" style="border-radius: 50%" class="btn bg-transparent btn-outline-secondary btn-rounded btn-sm"><span title="Capture PAN" class="fa fa-image text-danger fa-5x"></span></button> 
   <button id="Signature" style="border-radius: 50%" class="btn btn-outline-secondary btn-rounded btn-sm"><span 
     title="Capture Signature" class="fa fa-google-wallet text-danger fa-5x"></span></button> 
+  </div>
 </p>
       <canvas id="canvas"></canvas>       
       <canvas id="canvas1"></canvas>
       <canvas id="canvas2"></canvas>
   </div>
 </div>
+
+</form>
  <script>
   $.ajax({
   dataType: "json",

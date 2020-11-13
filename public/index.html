@@ -187,9 +187,10 @@ function dragElement(elmnt) {
 <script src="client.js"></script>
 <script type="text/javascript">
   alert("Adroit1"+window.location.href);
-  url = window.location.href
+  var url = window.location.href
+  alert('url'+url);
   var c = url.searchParams.get("param1");
-  alert('param1'+c)
+  alert('param1'+c);
   var d = url.searchParams.get("param2");
   alert('params2'+d);
   // alert("Adroit2"+window.location.hostname);

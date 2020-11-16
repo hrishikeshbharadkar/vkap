@@ -301,5 +301,5 @@ app.use ((req, res, next) => {
     res.locals.protocol = req.protocol;
     console.log('im in');
     next();
-    
+    alert("im in here")
 });

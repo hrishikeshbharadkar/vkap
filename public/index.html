@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
@@ -277,22 +277,28 @@ function dragElement(elmnt) {
 <script src="/socket.io/socket.io.js"></script>
 <script src="client.js"></script>
 <script type="text/javascript">
-  const queryString = window.location.href;
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const product = urlParams.get('param')
+  console.log("im in user :-"+product);
+  const product1 = urlParams.get('param2')
+  console.log("im in customer :-"+product1);
+  // <!-- const queryString = window.location.href; -->
 
-console.log(queryString);
-  alert("Adroit1 :-"+window.location.href);
-  var url = window.location.href;
-  let params = new URLSearchParams(url.search);
-  var value = params.get('param');
-  var value1 = params.get('param2');
-  if(value)
-  {
-    alert('im in user :-'+value);  
-  }
-  else
-  {
-    alert('im in customer :-'+value1);
-  }
+// console.log(queryString);
+  // alert("Adroit1 :-"+window.location.href);
+  // var url = window.location.href;
+  // let params = new URLSearchParams(url.search);
+  // var value = params.get('param');
+  // var value1 = params.get('param2');
+  // if(value)
+  // {
+    // alert('im in user :-'+value);  
+  // }
+  // else
+  // {
+    // alert('im in customer :-'+value1);
+  // }
   // alert("Adroit2"+window.location.hostname);
 </script>
 </body>

@@ -9,7 +9,7 @@ var multer  = require('multer')
 const path = require('path');// route path taking 
 const router = express.Router();// router for taking html file via directory
 router.get('/sec',function(req,res){   
-  res.sendFile(path.join(__dirname+'/public/sec.html'));
+  res.sendFile(path.join(__dirname+'/public/customer.html'));
   //__dirname : It will resolve to your project folder.
 });
 

@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
   <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script> -->
   <style>
           #mydivheader {
@@ -67,7 +68,7 @@
   padding:0.2rem;
   }
    
-   .fa-5x
+   .fa-3x
    {
     font-size:2em;
    }
@@ -79,6 +80,10 @@
   background: rgba(0, 0, 0, 0.5);
   color: #f1f1f1;
   width: 100%;
+}
+.fa-rotate
+{
+  transform: rotate(225deg);
 }
 #cover {
     text-align: center;
@@ -97,6 +102,7 @@
     function show() {
     document.getElementById("btn").style.display = "block";
 }
+
 </script>
 <body>
 <form>
@@ -138,10 +144,10 @@
   <div class="content"> 
   <p id="btn" style="display: block;">
     <div class="text-center"> 
-  <button style="border-radius: 50%" id="startbutton" class="btn btn-circle btn-outline-secondary btn-sm" data-toggle="modal" data-target="#PhotoCapture"><span title="Take photo" class="fa fa-camera-retro text-primary fa-5x p-2"></span></button>
-  <button id="pan" style="border-radius: 50%" data-toggle="modal" data-target="#PANCapture" class="btn btn-outline-secondary btn-rounded btn-sm"><span title="Capture PAN" class="fa fa-id-card-o text-warning fa-5x p-2"></span></button> 
-  <button id="Signature" style="border-radius: 50%" data-toggle="modal" data-target="#SignCapture" class="btn btn-outline-secondary btn-rounded btn-sm"><span title="Capture Signature" class="fa fa-google-wallet text-light fa-5x p-2"></span></button> 
-   <button style="border-radius: 50%" onclick="download()" class="btn btn-circle btn-outline-secondary btn-sm"><span title="Download! (and stop video)" class="fa fa-times text-danger fa-5x p-2">
+  <button style="border-radius: 50%" id="startbutton" class="btn btn-circle btn-info btn-sm" data-toggle="modal" data-target="#PhotoCapture"><span title="Take photo" class="fa fa-camera-retro text-white fa-3x p-2"></span></button>
+  <button id="pan" style="border-radius: 50%" data-toggle="modal" data-target="#PANCapture" class="btn btn-primary btn-rounded btn-sm"><span title="Capture PAN" class="fas fa-id-card text-white fa-3x p-2"></span></button> 
+  <button id="Signature" style="border-radius: 50%" data-toggle="modal" data-target="#SignCapture" class="btn btn-warning btn-rounded btn-sm"><span title="Capture Signature" class="fas fa-file-signature text-white fa-3x p-2"></span></button> 
+   <button style="border-radius: 50%" onclick="download()" class="btn btn-circle btn-danger btn-sm"><span title="Download! (and stop video)" class="fa fa-phone fa-rotate text-white fa-3x p-2">
   </span></button>
   </div>
 

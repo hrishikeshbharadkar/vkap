@@ -9,6 +9,8 @@ var localStream;
 var remoteStream;
 var rtcPeerConnection;
 
+
+
 var iceServers={
   'iceServers':[
     {'url':'stun:stun.services.mozilla.com'},
@@ -236,8 +238,8 @@ var video = document.getElementById('remoteVideo')
           height = width / (4/3);
         }
       
-        video.setAttribute('width', width);
-        video.setAttribute('height', height);
+        // video.setAttribute('width', width);
+        // video.setAttribute('height', height);
         canvas.setAttribute('width', width);
         canvas.setAttribute('height', height);
         canvas1.setAttribute('width', width);

@@ -15,6 +15,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script> -->
   <style>
           #mydivheader {
@@ -135,20 +137,70 @@
 </div>
   <div class="content"> 
   <p id="btn" style="display: block;">
-    <div class="text-center">
-  <button style="border-radius: 50%" onclick="download()" class="btn btn-circle btn-outline-secondary btn-sm"><span title="Download! (and stop video)" class="fa fa-times text-danger fa-5x">
+    <div class="text-center"> 
+  <button style="border-radius: 50%" id="startbutton" class="btn btn-circle btn-outline-secondary btn-sm" data-toggle="modal" data-target="#PhotoCapture"><span title="Take photo" class="fa fa-camera-retro text-primary fa-5x p-2"></span></button>
+  <button id="pan" style="border-radius: 50%" data-toggle="modal" data-target="#PANCapture" class="btn btn-outline-secondary btn-rounded btn-sm"><span title="Capture PAN" class="fa fa-id-card-o text-warning fa-5x p-2"></span></button> 
+  <button id="Signature" style="border-radius: 50%" data-toggle="modal" data-target="#SignCapture" class="btn btn-outline-secondary btn-rounded btn-sm"><span title="Capture Signature" class="fa fa-google-wallet text-light fa-5x p-2"></span></button> 
+   <button style="border-radius: 50%" onclick="download()" class="btn btn-circle btn-outline-secondary btn-sm"><span title="Download! (and stop video)" class="fa fa-times text-danger fa-5x p-2">
   </span></button>
-  <button style="border-radius: 50%" id="startbutton" class="btn btn-circle btn-outline-secondary btn-sm"><span title="Take photo" class="fa fa-camera-retro text-danger fa-5x"></span></button>
-  <button id="pan" style="border-radius: 50%" class="btn bg-transparent btn-outline-secondary btn-rounded btn-sm"><span title="Capture PAN" class="fa fa-image text-danger fa-5x"></span></button> 
-  <button id="Signature" style="border-radius: 50%" class="btn btn-outline-secondary btn-rounded btn-sm"><span 
-    title="Capture Signature" class="fa fa-google-wallet text-danger fa-5x"></span></button> 
   </div>
 
-</p>
-      <!-- <canvas id="canvas"></canvas>       
-      <canvas id="canvas1"></canvas>
-      <canvas id="canvas2"></canvas> -->
+</p><!-- 
+           
+      <canvas id="canvas1" class=""></canvas>
+      <canvas id="canvas2" class=""></canvas> -->
   </div>
+  <div class="modal" id="PhotoCapture">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title text-primary">Capture Photo</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body text-center">
+       <canvas id="canvas"></canvas>  
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" id="PANCapture">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title text-primary">Capture PAN</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body text-center">
+       <canvas id="canvas1"></canvas>  
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" id="SignCapture">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header text-primary">
+        <h4 class="modal-title">Capture Signature</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body text-center">
+       <canvas id="canvas2"></canvas>  
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 
 </form>

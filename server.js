@@ -6,6 +6,9 @@ var http = require('http').Server(app);
 var io = require('socket.io').listen(http);
 var fs= require('fs');  
 var multer  = require('multer')
+// const queryString = window.location.href;
+
+// console.log(queryString);
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -294,12 +297,3 @@ http.listen(port,function(){
 	console.log('listening on: 3000');
 });
 
-// let app=express();
-app.use ((req, res, next) => {
-    res.locals.url = req.originalUrl;
-    res.locals.host = req.get('host');
-    res.locals.protocol = req.protocol;
-    console.log('im in');
-    next();
-    alert("im in here")
-});

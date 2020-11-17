@@ -111,6 +111,7 @@
   <button id="Signature" style="border-radius: 50%" class="btn btn-outline-secondary btn-rounded btn-sm"><span 
     title="Capture Signature" class="fa fa-google-wallet text-danger fa-5x"></span></button> 
   </div>
+
 </p>
       <canvas id="canvas"></canvas>       
       <canvas id="canvas1"></canvas>
@@ -186,6 +187,9 @@ function dragElement(elmnt) {
 <script src="/socket.io/socket.io.js"></script>
 <script src="client.js"></script>
 <script type="text/javascript">
+  const queryString = window.location.href;
+
+console.log(queryString);
   alert("Adroit1 :-"+window.location.href);
   var url = window.location.href;
   let params = new URLSearchParams(url.search);

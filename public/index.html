@@ -38,13 +38,45 @@
   min-width: 100%; 
   min-height: 100%;
 }
+@media screen and (max-width: 600px) {
+    .resp {
+      width: 30%!important;
+    }
+  .resp  div
+  {
+  font-size:small;
+  }
+  .content
+  {
+  padding:0.2rem;
+  }
+  }
+  @media screen and (max-width: 992px) {
+  .resp {
+    width: 30%;
+  }
+  
+  .resp  div
+  {
+  font-size:small;
+  }
+  .content
+  {
+  padding:0.2rem;
+  }
+   
+   .fa-5x
+   {
+    font-size:2em;
+   }
+
+  }
 .content {
   position: fixed;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   color: #f1f1f1;
   width: 100%;
-  padding: 20px;
 }
 #cover {
     text-align: center;
@@ -95,9 +127,9 @@
                 </div>
             </div>          
         </section>
-          <div id="consultingRoom" class="coontainer-fluid col-xs-9 p-0" style="display:none;">
+          <div id="consultingRoom" class="container-fluid col-xs-9 p-0" style="display:none;">
   <video id="localVideo" autoplay muted="muted"></video>
- <div id="mydiv" class="col-md-2 col-xs-6 p-0">
+ <div id="mydiv" class="col-md-2 resp p-0">
   <div id="mydivheader"></div>
    <video id="remoteVideo" class="container-fluid p-0" autoplay></video>
 </div>
@@ -113,9 +145,9 @@
   </div>
 
 </p>
-      <canvas id="canvas"></canvas>       
+      <!-- <canvas id="canvas"></canvas>       
       <canvas id="canvas1"></canvas>
-      <canvas id="canvas2"></canvas>
+      <canvas id="canvas2"></canvas> -->
   </div>
 </div>
 
@@ -139,7 +171,7 @@
     },
 });
 </script> -->
-<!-- <script>
+<script>
 //Make the DIV element draggagle:
 dragElement(document.getElementById("mydiv"));
 
@@ -183,7 +215,7 @@ function dragElement(elmnt) {
     document.onmousemove = null;
   }
 }
-</script> -->
+</script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="client.js"></script>
 <script type="text/javascript">

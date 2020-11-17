@@ -279,11 +279,17 @@ function dragElement(elmnt) {
 <script type="text/javascript">
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  console.log(queryString);
+  alert("adroit :-" +queryString);
   const product = urlParams.get('param')
-  console.log("im in user :-"+product);
   const color = urlParams.get('param2')
-  console.log("im in customer :-"+color);
+  if(product)
+  {
+   console.log("im in user :-"+product); 
+  }
+  else 
+  {
+    console.log("im in customer :-"+color);
+  }
   // <!-- const queryString = window.location.href; -->
 
 // console.log(queryString);

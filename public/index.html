@@ -189,10 +189,16 @@ function dragElement(elmnt) {
   alert("Adroit1"+window.location.href);
   var url = window.location.href;
   let params = new URLSearchParams(url.search);
-  var value1 = params.get('param1');
-  alert('im in user :-'+value1);
-  var value = params.get('param2');
-  alert('im in customer :-'+value);
+  var value = params.get('param');
+  if(value)
+  {
+    alert('im in user :-'+value);  
+  }
+  else
+  {
+    var value1 = params.get('param2');
+    alert('im in customer :-'+value1);
+  }
   // alert("Adroit2"+window.location.hostname);
 </script>
 </body>

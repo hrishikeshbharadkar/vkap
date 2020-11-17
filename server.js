@@ -6,6 +6,14 @@ var http = require('http').Server(app);
 var io = require('socket.io').listen(http);
 var fs= require('fs');  
 var multer  = require('multer')
+const path = require('path');// route path taking 
+const router = express.Router();// router for taking html file via directory
+router.get('/sec',function(req,res){   
+  res.sendFile(path.join(__dirname+'/public/sec.html'));
+  //__dirname : It will resolve to your project folder.
+});
+
+app.use('/sec', router);// end for 2nd html....
 // const queryString = window.location.href;
 
 // console.log(queryString);

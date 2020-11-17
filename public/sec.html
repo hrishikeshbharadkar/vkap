@@ -141,7 +141,7 @@
   <div id="mydivheader"></div>
    <video id="remoteVideo" class="container-fluid p-0" autoplay></video>
 </div>
-  <div class="content"> 
+  <!-- <div class="content"> 
   <p id="btn" style="display: block;">
     <div class="text-center"> 
   <button style="border-radius: 50%" id="startbutton" class="btn btn-circle btn-info btn-sm" data-toggle="modal" data-target="#PhotoCapture"><span title="Take photo" class="fa fa-camera-retro text-white fa-3x p-2"></span></button>
@@ -151,11 +151,11 @@
   </span></button>
   </div>
 
-</p><!-- 
+</p> --><!-- 
            
       <canvas id="canvas1" class=""></canvas>
-      <canvas id="canvas2" class=""></canvas> -->
-  </div>
+      <canvas id="canvas2" class=""></canvas>
+  </div> -->
   <div class="modal" id="PhotoCapture">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -276,37 +276,37 @@ function dragElement(elmnt) {
 </script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="client.js"></script>
-<script type="text/javascript">
-  const queryString = window.location.href;
-  const urlParams = new URLSearchParams(queryString);
-  alert("adroit :-" +queryString);
-  const product = urlParams.get('param')
-  const color = urlParams.get('param2')
-  if(product)
-  {
-   console.log("im in user :-"+product); 
-  }
-  else 
-  {
-    console.log("im in customer :-"+color);
-  }
-  // <!-- const queryString = window.location.href; -->
+<!-- <script type="text/javascript"> --> -->
+  <!-- const queryString = window.location.href; -->
+  <!-- const urlParams = new URLSearchParams(queryString); -->
+  <!-- alert("adroit :-" +queryString); -->
+  <!-- const product = urlParams.get('param') -->
+  <!-- const color = urlParams.get('param2') -->
+  <!-- if(product) -->
+  <!-- { -->
+   <!-- console.log("im in user :-"+product);  -->
+  <!-- } -->
+  <!-- else  -->
+  <!-- { -->
+    <!-- console.log("im in customer :-"+color); -->
+  <!-- } -->
+  <!-- const queryString = window.location.href; -->
 
-// console.log(queryString);
-  // alert("Adroit1 :-"+window.location.href);
-  // var url = window.location.href;
-  // let params = new URLSearchParams(url.search);
-  // var value = params.get('param');
-  // var value1 = params.get('param2');
-  // if(value)
-  // {
-    // alert('im in user :-'+value);  
-  // }
-  // else
-  // {
-    // alert('im in customer :-'+value1);
-  // }
-  // alert("Adroit2"+window.location.hostname);
+<!-- console.log(queryString); -->
+  <!-- alert("Adroit1 :-"+window.location.href); -->
+  <!-- var url = window.location.href; -->
+  <!-- let params = new URLSearchParams(url.search); -->
+  <!-- var value = params.get('param'); -->
+  <!-- var value1 = params.get('param2'); -->
+  <!-- if(value) -->
+   <!-- { -->
+    <!-- alert('im in user :-'+value);   -->
+   <!-- } -->
+   <!-- else -->
+   <!-- { -->
+     <!-- alert('im in customer :-'+value1); -->
+   <!-- } -->
+   <!-- alert("Adroit2"+window.location.hostname); -->
 </script>
 </body>
 </html>

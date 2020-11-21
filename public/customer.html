@@ -34,7 +34,7 @@
   text-align: center;
   border: 1px solid #d3d3d3;
 }
-#localVideo {
+#remoteVideo {
   position: fixed;
   right: 0;
   bottom: 0;
@@ -123,7 +123,6 @@
           <div class="input-group mb-3">
         <input type="text" id="roomNumber" class="form-control" placeholder="Enter Room Number" aria-label="Enter Room Number"
         aria-describedby="basic-addon2"/>
-
         <div class="input-group-append">
             <span class="input-group-text" id="basic-addon2">
               <span id="goRoom" class="fa fa-arrow-right"></span>
@@ -137,12 +136,11 @@
             </div>          
         </section>
           <div id="consultingRoom" class="container-fluid col-xs-9 p-0" style="display:none;">
-            <div id="mydiv" class="col-md-2 resp p-0">
+  <video id="remoteVideo" autoplay muted="muted"></video>
+ <div id="mydiv" class="col-md-2 resp p-0">
   <div id="mydivheader"></div>
-   <video id="localVideo" autoplay muted="muted"></video>
+   <video id="localVideo" class="container-fluid p-0" autoplay></video>
 </div>
-  
- <video id="remoteVideo" class="container-fluid p-0" autoplay></video>
   <!-- <div class="content"> 
   <p id="btn" style="display: block;">
     <div class="text-center"> 

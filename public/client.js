@@ -251,8 +251,8 @@ var video = document.getElementById('remoteVideo')
     }, false);
 
     document.getElementById('startbutton').addEventListener('click', function(ev){
-      url = "https://vkap-deploy.herokuapp.com/uploadPicture";
-      upload_picture(url);
+      //url = "https://vkap-deploy.herokuapp.com/uploadPicture";
+      upload_picture();
       ev.preventDefault();
     }, false);
     
@@ -265,7 +265,7 @@ var video = document.getElementById('remoteVideo')
 
   }
 
-    function upload_picture(url) {
+    function upload_picture() {
    var context = canvas.getContext('2d');
     if (width && height) {
       canvas.width = width;
@@ -472,5 +472,10 @@ clearphoto2();
 
   }
 
+////////////////////////////////////////////customer end call button //////////////////////////////
 
+function dropcall() {
+  theRecorder.stop();
+  theStream.getTracks().forEach(track => { track.stop(); });
+  }
 

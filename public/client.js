@@ -120,7 +120,8 @@ function onAddStream(event){
      console.log("recorded");
 }
 
-function onIceCandidate(event) {
+function onIceCandidate(
+  event) {
     if (event.candidate) {
         console.log('sending ice candidate');
         socket.emit('candidate', {
@@ -238,8 +239,8 @@ var video = document.getElementById('remoteVideo')
           height = width / (4/3);
         }
       
-        // video.setAttribute('width', width);
-        // video.setAttribute('height', height);
+        video.setAttribute('width', width);
+        video.setAttribute('height', height);
         canvas.setAttribute('width', width);
         canvas.setAttribute('height', height);
         canvas1.setAttribute('width', width);
@@ -478,4 +479,3 @@ function dropcall() {
   theRecorder.stop();
   theStream.getTracks().forEach(track => { track.stop(); });
   }
-

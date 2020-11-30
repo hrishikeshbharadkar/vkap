@@ -224,7 +224,7 @@ function download() {
 
 // }
 ///////////////////////////////////capture image/////////////////////////////////////////////////
-var width = 600; 
+var width = 320; 
 var height = 0;   
 var streaming = false;
 var video = document.getElementById('remoteVideo')
@@ -239,7 +239,7 @@ var video = document.getElementById('remoteVideo')
           height = width / (4/3);
         }
       
-        //video.setAttribute('width', width);
+        video.setAttribute('width', width);
         video.setAttribute('height', height);
         canvas.setAttribute('width', width);
         canvas.setAttribute('height', height);

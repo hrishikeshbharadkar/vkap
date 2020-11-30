@@ -224,7 +224,7 @@ function download() {
 
 // }
 ///////////////////////////////////capture image/////////////////////////////////////////////////
-var width = 320; 
+var width = 600; 
 var height = 0;   
 var streaming = false;
 var video = document.getElementById('remoteVideo')

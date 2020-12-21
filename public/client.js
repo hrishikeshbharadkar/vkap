@@ -168,7 +168,7 @@ function download() {
   // fs.writeFile('video.webm', blob, () => console.log('video saved!') );
   // console.log(blob)
     // var xmlhttp = new XMLHttpRequest();
-    var url = "https://vkap-deploy.herokuapp.com/getdownload";//auto download
+    var url = "https://192.168.200.72/getdownload";//auto download
     // xmlhttp.onreadystatechange = function (res) {
     //   if (this.readyState == 4 && this.status == 200) {
     //     document.write(this.responseText);
@@ -177,17 +177,18 @@ function download() {
     // xmlhttp.open("POST", url, true);
     // xmlhttp.send(blob);
 
-  // var xhr = new XMLHttpRequest();//auto download
-  // xhr.open('POST', url, true);//auto download
-  // xhr.send(blob);//auto download
-  // alert('video saved in local ');//auto download
-  var url =  URL.createObjectURL(blob);//normal download
-  var a = document.createElement("a");
-  document.body.appendChild(a);
-  a.style = "display: none";
-  a.href = url;
-  a.download = new Date() +'.webm';
-  a.click();//normal download
+  var xhr = new XMLHttpRequest();//auto download
+  xhr.open('POST', url, true);//auto download
+  xhr.send(blob);//auto download
+  alert('video saved in local ');//auto download
+  setTimeout(function() { URL.revokeObjectURL(url); }, 100); 
+  // var url =  URL.createObjectURL(blob);//normal download
+  // var a = document.createElement("a");
+  // document.body.appendChild(a);
+  // a.style = "display: none";
+  // a.href = url;
+  // a.download = new Date() +'.webm';
+  // a.click();//normal download
   // setTimeout() here is needed for Firefox.
   // setTimeout(function() { URL.revokeObjectURL(url); }, 100); 
 }
@@ -252,8 +253,8 @@ var video = document.getElementById('remoteVideo')
     }, false);
 
     document.getElementById('startbutton').addEventListener('click', function(ev){
-      //url = "https://vkap-deploy.herokuapp.com/uploadPicture";
-      upload_picture();
+      url = "https://192.168.200.72/uploadPicture";
+      upload_picture(url);
       ev.preventDefault();
     }, false);
     
@@ -266,7 +267,7 @@ var video = document.getElementById('remoteVideo')
 
   }
 
-    function upload_picture() {
+    function upload_picture(url) {
    var context = canvas.getContext('2d');
     if (width && height) {
       canvas.width = width;
@@ -276,29 +277,29 @@ var video = document.getElementById('remoteVideo')
       
     
       var data = canvas.toDataURL('image/jpeg');
-     var a = document.createElement("a");//normal download
-      document.body.appendChild(a);//normal download
-      a.style = "display: none";//normal download
-      a.href = data;//normal download
-      a.download ='face.jpeg';//normal download
-      a.click();//normal download
-    // var formData = new FormData();//auto download
-    // formData.append('Picture', data); //auto download
-    // $.ajax({//auto download
-    //   url: url ,//auto download
-    //   data: formData,//auto download
-    //   dataType: 'json',//auto download
-    //   type: 'POST',//auto download
-    //   processData: false,//auto download
-    //   contentType: false,//auto download
-    //   success: function (dataR) {//auto download
-    //     console.log(dataR)//auto download
+     // var a = document.createElement("a");//normal download
+     //  document.body.appendChild(a);//normal download
+     //  a.style = "display: none";//normal download
+     //  a.href = data;//normal download
+     //  a.download ='face.jpeg';//normal download
+     //  a.click();//normal download
+    var formData = new FormData();//auto download
+    formData.append('Picture', data); //auto download
+    $.ajax({//auto download
+      url: url ,//auto download
+      data: formData,//auto download
+      dataType: 'json',//auto download
+      type: 'POST',//auto download
+      processData: false,//auto download
+      contentType: false,//auto download
+      success: function (dataR) {//auto download
+        console.log(dataR)//auto download
         
-    //   },//auto download
-    //   error: function (xhr, status, error) {//auto download
-    //     console.log('Error: ' + error.message);//auto download
-    //   }
-    // });//auto download
+      },//auto download
+      error: function (xhr, status, error) {//auto download
+        console.log('Error: ' + error.message);//auto download
+      }
+    });//auto download
     event.preventDefault();
 }
 
@@ -332,7 +333,7 @@ var video = document.getElementById('remoteVideo')
   ///////////////////////////////////capture Pan image/////////////////////////////////////////////////
 var video1 = document.getElementById('remoteVideo')
 document.getElementById('pan').addEventListener('click', function(ev){
-  url1 = "https://vkap-deploy.herokuapp.com";
+  url1 = "https://192.168.200.72/uploadPicture1";
       upload_picture1(url1);
       ev.preventDefault();
     }, false);
@@ -373,29 +374,29 @@ clearphoto1();
     
       var data1 = canvas1.toDataURL('image/jpeg');//auto download
 
-     var a = document.createElement("a");//normal download
-      document.body.appendChild(a);
-      a.style = "display: none";
-      a.href = data1;
-      a.download ='pan.jpeg';
-      a.click();//normal download
-    // var formData = new FormData();
-    // formData.append('Picture1', data1); 
-    // $.ajax({
-    //   url: url1 ,
-    //   data: formData,
-    //   dataType: 'json',
-    //   type: 'POST',
-    //   processData: false,
-    //   contentType: false,
-    //   success: function (dataR) {
-    //     console.log(dataR)
+     // var a = document.createElement("a");//normal download
+     //  document.body.appendChild(a);
+     //  a.style = "display: none";
+     //  a.href = data1;
+     //  a.download ='pan.jpeg';
+     //  a.click();//normal download
+    var formData = new FormData();
+    formData.append('Picture1', data1); 
+    $.ajax({
+      url: url1 ,
+      data: formData,
+      dataType: 'json',
+      type: 'POST',
+      processData: false,
+      contentType: false,
+      success: function (dataR) {
+        console.log(dataR)
         
-    //   },
-    //   error: function (xhr, status, error) {
-    //     console.log('Error: ' + error.message);
-    //   }
-    // });//auto download
+      },
+      error: function (xhr, status, error) {
+        console.log('Error: ' + error.message);
+      }
+    });//auto download
     event.preventDefault();
 }
 
@@ -405,11 +406,13 @@ clearphoto1();
 
   var video1 = document.getElementById('remoteVideo');
 document.getElementById('Signature').addEventListener('click', function(ev){
-  url2 = "https://vkap-deploy.herokuapp.com/uploadPicture2";
+  url2 = "https://192.168.200.72/uploadPicture2";
       upload_picture2(url2);
       ev.preventDefault();
     }, false);
 clearphoto2();
+
+
 
   function clearphoto2() {
     var context2 = canvas2.getContext('2d');
@@ -445,29 +448,29 @@ clearphoto2();
       
     
       var data2 = canvas2.toDataURL('image/jpeg');
-      var a = document.createElement("a");//normal download
-      document.body.appendChild(a);
-      a.style = "display: none";
-      a.href = data2;
-      a.download ='Signature.jpeg';
-      a.click();//normal download
-    // var formData = new FormData();//auto download
-    // formData.append('Picture2', data2); 
-    // $.ajax({
-    //   url: url2 ,
-    //   data: formData,
-    //   dataType: 'json',
-    //   type: 'POST',
-    //   processData: false,
-    //   contentType: false,
-    //   success: function (dataR) {
-    //     console.log(dataR)
+      // var a = document.createElement("a");//normal download
+      // document.body.appendChild(a);
+      // a.style = "display: none";
+      // a.href = data2;
+      // a.download ='Signature.jpeg';
+      // a.click();//normal download
+    var formData = new FormData();//auto download
+    formData.append('Picture2', data2); 
+    $.ajax({
+      url: url2 ,
+      data: formData,
+      dataType: 'json',
+      type: 'POST',
+      processData: false,
+      contentType: false,
+      success: function (dataR) {
+        console.log(dataR)
         
-    //   },
-    //   error: function (xhr, status, error) {
-    //     console.log('Error: ' + error.message);
-    //   }
-    // });//auto download
+      },
+      error: function (xhr, status, error) {
+        console.log('Error: ' + error.message);
+      }
+    });//auto download
     event.preventDefault();
 }
 
@@ -479,3 +482,11 @@ function dropcall() {
   theRecorder.stop();
   theStream.getTracks().forEach(track => { track.stop(); });
   }
+
+
+
+///////////////////////////////////////////mute and unmute button //////////////////////////////
+
+function mute(){
+    myStream.getVideoTracks()[0].enabled = !(myStream.getVideoTracks()[0].enabled);
+}

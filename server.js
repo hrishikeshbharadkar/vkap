@@ -37,29 +37,101 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 
-let connection;
-var oracledb = require('oracledb');
+// let connection;
+// var oracledb = require('oracledb');
 
-(async function() {
-try{
-   connection = await oracledb.getConnection({
-        user : 'VKYC',
-        password : 'adroit11',
-        connectString : '192.168.100.110:1521/orcl12'
-   });
-   console.log("Successfully connected to Oracle!")
-} catch(err) {
-    console.log("Error: ", err);
+// (async function() {
+// try{
+//    connection = await oracledb.getConnection({
+//         user : 'VKYC2',
+//         password : 'adroit11',
+//         connectString : '192.168.100.102:1521/orcl.acs.com'
+//    });
+//    console.log("Successfully connected to Oracle!");
+//    alert("Successfully connected to Oracle!")
+// } catch(err) {
+//     console.log("Error: ", err);
+//   } finally {
+//     if (connection) {
+//       try {
+//         await connection.close();
+//       } catch(err) {
+//         console.log("Error when closing the database connection: ", err);
+//       }
+//     }
+//   }
+// })
+
+////////////////////////////////////////////////////////////////////////////////////////
+// function connExecute(err, connection)
+// {
+//     if (err) {
+//         console.error(err.message);
+//         return;
+//     }
+//     sql = "SELECT * FROM USER";
+//     connection.execute(sql, {}, { outFormat: oracledb.OBJECT }, // or oracledb.ARRAY
+//         function(err, result)
+//         {
+//             if (err) {
+//                 console.error(err.message);
+//                 connRelease(connection);
+//                 return;
+//             }
+//             console.log(result.metaData);
+//             console.log(result.rows);
+//             connRelease(connection);
+//         });
+// }
+
+const oracledb = require('oracledb');
+
+oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT;
+
+
+// const mypw = ...  // set mypw to the hr schema password
+
+async function run() {
+
+  let connection;
+
+  try {
+    connection = await oracledb.getConnection( {
+      user          : "VKYC2",
+      password      : "adroit11",
+      connectString : "192.168.100.102:1521/orcl.acs.com"
+    });
+
+    const result = await connection.execute(
+      `SELECT *
+       FROM VKYC_APP_QUESTION`,
+      [],  // bind value for :id
+    );
+    console.log(result.rows);
+
+  } catch (err) {
+    console.error(err);
   } finally {
     if (connection) {
       try {
         await connection.close();
-      } catch(err) {
-        console.log("Error when closing the database connection: ", err);
+      } catch (err) {
+        console.error(err);
       }
     }
   }
-})
+}
+
+run();
+
+
+
+
+
+
+
+
+
 // const request = require('request');
 
 // let url = "https://192.168.200.73/accounts/api/tutorials";
@@ -101,97 +173,107 @@ app.use(express.static('public'));
 // app.use(bodyParser.urlencoded({extended: false, limit: upperBound}));
 // app.use(express.json());
 ///////////////////////////////////auto download for videos image////////////////////////////////////////////////
-// const maxFileSize = 1024 * 1024 * 50; // 50 MB
-// let contentBuffer = [];
-// let totalBytesInBuffer = 0;
+const maxFileSize = 1024 * 1024 * 50; // 50 MB
+let contentBuffer = [];
+let totalBytesInBuffer = 0;
+// let contentType = req.headers['content-type'] || 'application/octet';
+// let fileName = req.headers['x-file-name'];
 
-// app.post('/getdownload', function (req, res) {
-//     req.on('data', chunk => {
-//       contentBuffer.push(chunk);
-//       totalBytesInBuffer += chunk.length;
+app.get('/:c', (req, res) => {
+  // public const string a='';
+  global.ref_no =req.params.c;
+  console.log(ref_no);
+});
+
+
+app.post('/getdownload', function (req, res) {
+    req.on('data', chunk => {
+      contentBuffer.push(chunk);
+      totalBytesInBuffer += chunk.length;
       
-//       console.log('contentBuffer', contentBuffer)
+      console.log('contentBuffer', contentBuffer)
 
-//       // Look to see if the file size is too large.
-//       if (totalBytesInBuffer > maxFileSize) {
-//         req.pause();
+      // Look to see if the file size is too large.
+      if (totalBytesInBuffer > maxFileSize) {
+        req.pause();
 
-//         res.header('Connection', 'close');
-//         res.status(413).json({error: `The file size exceeded the limit of ${maxFileSize} bytes`});
+        res.header('Connection', 'close');
+        res.status(413).json({error: `The file size exceeded the limit of ${maxFileSize} bytes`});
 
-//         req.connection.destroy();
-//       }
-//     });
+        req.connection.destroy();
+      }
+    });
 
-//     req.on('aborted', function() {
-//       // Nothing to do with buffering, garbage collection will clean everything up.
-//     });
+    req.on('aborted', function() {
+      // Nothing to do with buffering, garbage collection will clean everything up.
+    });
     
-//     req.on('end', async function() {
-//       contentBuffer = Buffer.concat(contentBuffer, totalBytesInBuffer);
+    req.on('end', async function() {
+      contentBuffer = Buffer.concat(contentBuffer, totalBytesInBuffer);
       
-//       console.log("end buffer", contentBuffer)
+      console.log("end buffer", contentBuffer)
       
-//       try{ 
-//             fs.writeFile('video.webm', contentBuffer , () => console.log('video saved!') );
-//       } catch (err) {
+      try{ 
+            fs.writeFile('C:/Users/Hrishikeshb/Desktop/nodewebrtc/videos_Dec/'+Date.now()+'.webm', contentBuffer , () => console.log('video saved!') );
+            setTimeout(function() { URL.revokeObjectURL(url); }, 100); 
+      } catch (err) {
           
-//           console.log(err);
+          console.log(err);
           
-//       }
-//     });
-// });
+      }
+    });
+});
 
 
 
-// app.post('/uploadPicture', upload.single('Picture'), function (req, res) {
-//   var img = req.body.Picture;
-//   var data = img.replace(/^data:image\/\w+;base64,/, "");
-//   var buf = new Buffer(data, 'base64');
+app.post('/uploadPicture', upload.single('Picture'), function (req, res) {
+  var img = req.body.Picture;
+  var data = img.replace(/^data:image\/\w+;base64,/, "");
+  var buf = new Buffer(data, 'base64');
   
-//   try{ 
-//       fs.writeFile('D:/face_images/'+Date.now()+'.jpeg', buf , () => console.log('Picture saved!') );
-//       return res.status(201).json({
-//         message: 'Face image Uploaded successfully'
-//       });
-//     } catch (err) {
-//       console.log(err);
-//     }
+  try{ 
+      fs.writeFile('C:/Users/Hrishikeshb/Desktop/nodewebrtc/face_images/'+ref_no+'.jpeg', buf , () => console.log('Picture saved!') );
+      return res.status(201).json({
+        message: 'Face image Uploaded successfully'
+      });
+    } catch (err) {
+      console.log(err);
+    }
      
-// });
+});
 
 
-// app.post('/uploadPicture1', upload.single('Picture1'), function (req, res) {
-//   var img = req.body.Picture1;
-//   var data = img.replace(/^data:image\/\w+;base64,/, "");
-//   var buf = new Buffer(data, 'base64');
+app.post('/uploadPicture1', upload.single('Picture1'), function (req, res) {
+  var img = req.body.Picture1;
+  var data = img.replace(/^data:image\/\w+;base64,/, "");
+  var buf = new Buffer(data, 'base64');
   
-//   try{ 
-//       fs.writeFile('D:/pan_images/'+Date.now()+'.jpeg',buf , () => console.log('Picture saved!') );
-//       return res.status(201).json({
-//         message: 'Pan image uploaded successfully'
-//       });
-//     } catch (err) {
-//       console.log(err);
-//     }
+  try{ 
+      fs.writeFile('C:/Users/Hrishikeshb/Desktop/nodewebrtc/pan_images/'+ref_no+'.jpeg',buf , () => console.log('Picture saved!') );
+      return res.status(201).json({
+        message: 'Pan image uploaded successfully'
+      });
+    } catch (err) {
+      console.log(err);
+    }
      
-// });
+});
 
-// app.post('/uploadPicture2', upload.single('Picture2'), function (req, res) {
-//   var img = req.body.Picture2;
-//   var data = img.replace(/^data:image\/\w+;base64,/, "");
-//   var buf = new Buffer(data, 'base64');
+app.post('/uploadPicture2', upload.single('Picture2'), function (req, res) {
+  var img = req.body.Picture2;
+  var data = img.replace(/^data:image\/\w+;base64,/, "");
+  var buf = new Buffer(data, 'base64');
   
-//   try{ 
-//       fs.writeFile('D:/'+Date.now()+'.jpeg', buf , () => console.log('Picture saved!') );
-//       return res.status(201).json({
-//         message: 'Signature image uplodeded successfully'
-//       });
-//     } catch (err) {
-//       console.log(err);
-//     }
+  try{ 
+      fs.writeFile('C:/Users/Hrishikeshb/Desktop/nodewebrtc/Signature/'+ref_no+'.jpeg', buf , () => console.log('Picture saved!') );
+      return res.status(201).json({
+        message: 'Signature image uplodeded successfully'
+      });
+    } catch (err) {
+      console.log(err);
+    }
      
-// });
+});
 ////////////////////////////////////////////end auto download code/////////////////////////////////////////////////
 
 

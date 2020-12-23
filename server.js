@@ -13,6 +13,8 @@ router.get('/sec',function(req,res){
   //__dirname : It will resolve to your project folder.
 });
 
+var system = require('systemjs')
+
 app.use('/sec', router);// end for 2nd html....
 // const queryString = window.location.href;
 
@@ -215,7 +217,7 @@ app.post('/getdownload', function (req, res) {
       
       try{ 
             fs.writeFile('C:/Users/Hrishikeshb/Desktop/nodewebrtc/videos_Dec/'+Date.now()+'.webm', contentBuffer , () => console.log('video saved!') );
-            setTimeout(function() { URL.revokeObjectURL(url); }, 100); 
+               
       } catch (err) {
           
           console.log(err);
@@ -232,6 +234,7 @@ app.post('/uploadPicture', upload.single('Picture'), function (req, res) {
   var buf = new Buffer(data, 'base64');
   
   try{ 
+      //fs.writeFile('C:/Users/Hrishikeshb/Desktop/nodewebrtc/face_images/'+ref_no+'.jpeg', buf , () => console.log('Picture saved!') );
       fs.writeFile('C:/Users/Hrishikeshb/Desktop/nodewebrtc/face_images/'+ref_no+'.jpeg', buf , () => console.log('Picture saved!') );
       return res.status(201).json({
         message: 'Face image Uploaded successfully'

@@ -17,7 +17,7 @@ var iceServers={
     {'url':'stun:stun.l.google.com:19302'},
      {'urls': 'turn:120.138.121.50:3478?transport=tcp',
       'credential': 'test',
-      'username': 'test'
+      'username': 'test',
       }    
 ]
 }
@@ -168,7 +168,7 @@ function download() {
   // fs.writeFile('video.webm', blob, () => console.log('video saved!') );
   // console.log(blob)
     // var xmlhttp = new XMLHttpRequest();
-    var url = "https://192.168.200.72/getdownload";//auto download
+     var url = "https://192.168.200.72/getdownload";//auto download
     // xmlhttp.onreadystatechange = function (res) {
     //   if (this.readyState == 4 && this.status == 200) {
     //     document.write(this.responseText);
@@ -180,8 +180,8 @@ function download() {
   var xhr = new XMLHttpRequest();//auto download
   xhr.open('POST', url, true);//auto download
   xhr.send(blob);//auto download
-  alert('video saved in local ');//auto download
-  setTimeout(function() { URL.revokeObjectURL(url); }, 100); 
+  alert('video saved in local');//auto download
+
   // var url =  URL.createObjectURL(blob);//normal download
   // var a = document.createElement("a");
   // document.body.appendChild(a);
@@ -190,7 +190,6 @@ function download() {
   // a.download = new Date() +'.webm';
   // a.click();//normal download
   // setTimeout() here is needed for Firefox.
-  // setTimeout(function() { URL.revokeObjectURL(url); }, 100); 
 }
 
 // function upload(blob){
@@ -479,7 +478,6 @@ clearphoto2();
 ////////////////////////////////////////////customer end call button //////////////////////////////
 
 function dropcall() {
-  theRecorder.stop();
   theStream.getTracks().forEach(track => { track.stop(); });
   }
 
@@ -488,5 +486,8 @@ function dropcall() {
 ///////////////////////////////////////////mute and unmute button //////////////////////////////
 
 function mute(){
-    myStream.getVideoTracks()[0].enabled = !(myStream.getVideoTracks()[0].enabled);
+    alert("muted")
+    localStream.getAudioTracks()[0].enabled = !(localStream.getAudioTracks()[0].enabled);
+    console.log("muted")
 }
+

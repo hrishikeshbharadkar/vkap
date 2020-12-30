@@ -85,11 +85,11 @@
     position: relative;
     z-index: 1;
 }
-#mydiv{top: 0;right:0}      
+#mydiv{top: 0;right:0}  
+
   </style>
 </head>
 <body>
-<form>
   <section id="cover" class="min-vh-100">
         <div id="cover-caption">
             <div class="container">
@@ -134,9 +134,8 @@
   <button style="border-radius: 50%" id="startbutton" class="btn btn-circle btn-info btn-sm" data-toggle="modal" data-target="#PhotoCapture"><span title="Take photo" class="fa fa-camera-retro text-white fa-3x p-2"></span></button>
   <button id="pan" style="border-radius: 50%" data-toggle="modal" data-target="#PANCapture" class="btn btn-primary btn-rounded btn-sm"><span title="Capture PAN" class="fas fa-id-card text-white fa-3x p-2"></span></button> 
   <button id="Signature" style="border-radius: 50%" data-toggle="modal" data-target="#SignCapture" class="btn btn-warning btn-rounded btn-sm"><span title="Capture Signature" class="fas fa-file-signature text-white fa-3x p-2"></span></button> 
-   <button style="border-radius: 50%" onclick="download()" class="btn btn-circle btn-danger btn-sm"><span title="Download! (and stop video)" class="fa fa-phone fa-rotate text-white fa-3x p-2"></span></button>
-   <!-- <button onclick="mute()">mute</button> -->
-   <input type="button" value="mute"onclick="mute()">
+  <button style="border-radius: 50%" onclick="download()" class="btn btn-circle btn-danger btn-sm"><span title="Download! (and stop video)" class="fa fa-phone fa-rotate text-white fa-3x p-2"></span></button>
+  <button style="border-radius: 50%" onclick="mute()" class="btn btn-circle btn-secondary btn-sm mute_btn"><span title="Mute / Unmute" class="fas fa-microphone text-white fa-3x p-2" id="mute1"></span></button>
   </div>
 
 </p>
@@ -198,13 +197,12 @@
   </div>
 </div>
 </div>
-</form>
 <script src="/socket.io/socket.io.js"></script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script> -->
 <script src="client.js"></script>
 <script type="text/javascript">
-var url_string = window.location.href; //window.location.href
+  var url_string = window.location.href; //window.location.href
   var url = new URL(url_string);
   var c = url.searchParams.get("ref_no");
   $('#roomNumber').val(c);

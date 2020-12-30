@@ -105,8 +105,8 @@ async function run() {
     });
 
     const result = await connection.execute(
-      `SELECT *
-       FROM VKYC_APP_QUESTION`,
+      `SELECT REFERENCE_NO
+       FROM VKYC_APP_SCHEDULE`,
       [],  // bind value for :id
     );
     console.log(result.rows);
@@ -176,7 +176,7 @@ app.use(express.static('public'));
 // app.use(express.json());
 ///////////////////////////////////auto download for videos image////////////////////////////////////////////////
 const maxFileSize = 1024 * 1024 * 50; // 50 MB
-let contentBuffer = [];
+//let contentBuffer = [];
 let totalBytesInBuffer = 0;
 // let contentType = req.headers['content-type'] || 'application/octet';
 // let fileName = req.headers['x-file-name'];
@@ -189,6 +189,8 @@ app.get('/:c', (req, res) => {
 
 
 app.post('/getdownload', function (req, res) {
+
+    var contentBuffer = [];
     req.on('data', chunk => {
       contentBuffer.push(chunk);
       totalBytesInBuffer += chunk.length;
@@ -235,7 +237,7 @@ app.post('/uploadPicture', upload.single('Picture'), function (req, res) {
   
   try{ 
       //fs.writeFile('C:/Users/Hrishikeshb/Desktop/nodewebrtc/face_images/'+ref_no+'.jpeg', buf , () => console.log('Picture saved!') );
-      fs.writeFile('C:/Users/Hrishikeshb/Desktop/nodewebrtc/face_images/'+ref_no+'.jpeg', buf , () => console.log('Picture saved!') );
+      fs.writeFile('C:/Users/Hrishikeshb/Desktop/nodewebrtc/face_images/'+Date.now()+'.jpeg', buf , () => console.log('Picture saved!') );
       return res.status(201).json({
         message: 'Face image Uploaded successfully'
       });
@@ -252,7 +254,7 @@ app.post('/uploadPicture1', upload.single('Picture1'), function (req, res) {
   var buf = new Buffer(data, 'base64');
   
   try{ 
-      fs.writeFile('C:/Users/Hrishikeshb/Desktop/nodewebrtc/pan_images/'+ref_no+'.jpeg',buf , () => console.log('Picture saved!') );
+      fs.writeFile('C:/Users/Hrishikeshb/Desktop/nodewebrtc/pan_images/'+Date.now()+'.jpeg',buf , () => console.log('Picture saved!') );
       return res.status(201).json({
         message: 'Pan image uploaded successfully'
       });
@@ -268,7 +270,7 @@ app.post('/uploadPicture2', upload.single('Picture2'), function (req, res) {
   var buf = new Buffer(data, 'base64');
   
   try{ 
-      fs.writeFile('C:/Users/Hrishikeshb/Desktop/nodewebrtc/Signature/'+ref_no+'.jpeg', buf , () => console.log('Picture saved!') );
+      fs.writeFile('C:/Users/Hrishikeshb/Desktop/nodewebrtc/Signature/'+Date.now()+'.jpeg', buf , () => console.log('Picture saved!') );
       return res.status(201).json({
         message: 'Signature image uplodeded successfully'
       });
@@ -381,6 +383,10 @@ socket.on('create or join',function(room){
 
     socket.on('toggleAudio', function(event){
         socket.broadcast.to(event.room).emit('toggleAudio', event.message);
+    });
+
+    socket.on('close',function(event){
+        console.log('closing')
     });
 
 });

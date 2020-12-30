@@ -3,12 +3,11 @@ var divConsultingRoom = document.getElementById("consultingRoom");
 var inputRoomNumber = document.getElementById("roomNumber");
 var btnGoRoom = document.getElementById("goRoom");
 var localVideo = document.getElementById("localVideo");
-var remoteVideo= document.getElementById("remoteRoom");
+var remoteVideo= document.getElementById("remoteVideo");
 var roomNumber;
 var localStream;
 var remoteStream;
 var rtcPeerConnection;
-
 
 
 var iceServers={
@@ -21,6 +20,190 @@ var iceServers={
       }    
 ]
 }
+
+
+
+
+var BandwidthHandler = (function() {
+    function setBAS(sdp, bandwidth, isScreen) {
+        if (!bandwidth) {
+            return sdp;
+        }
+
+        if (typeof isFirefox !== 'undefined' && isFirefox) {
+            return sdp;
+        }
+
+        if (isScreen) {
+            if (!bandwidth.screen) {
+                console.warn('It seems that you are not using bandwidth for screen. Screen sharing is expected to fail.');
+            } else if (bandwidth.screen < 300) {
+                console.warn('It seems that you are using wrong bandwidth value for screen. Screen sharing is expected to fail.');
+            }
+        }
+
+        // if screen; must use at least 300kbs
+        if (bandwidth.screen && isScreen) {
+            sdp = sdp.replace(/b=AS([^\r\n]+\r\n)/g, '');
+            sdp = sdp.replace(/a=mid:video\r\n/g, 'a=mid:video\r\nb=AS:' + bandwidth.screen + '\r\n');
+        }
+
+        // remove existing bandwidth lines
+        if (bandwidth.audio || bandwidth.video || bandwidth.data) {
+            sdp = sdp.replace(/b=AS([^\r\n]+\r\n)/g, '');
+        }
+
+        if (bandwidth.audio) {
+            sdp = sdp.replace(/a=mid:audio\r\n/g, 'a=mid:audio\r\nb=AS:' + bandwidth.audio + '\r\n');
+        }
+
+        if (bandwidth.video) {
+            sdp = sdp.replace(/a=mid:video\r\n/g, 'a=mid:video\r\nb=AS:' + (isScreen ? bandwidth.screen : bandwidth.video) + '\r\n');
+        }
+
+        return sdp;
+    }
+
+    // Find the line in sdpLines that starts with |prefix|, and, if specified,
+    // contains |substr| (case-insensitive search).
+    function findLine(sdpLines, prefix, substr) {
+        return findLineInRange(sdpLines, 0, -1, prefix, substr);
+    }
+
+    // Find the line in sdpLines[startLine...endLine - 1] that starts with |prefix|
+    // and, if specified, contains |substr| (case-insensitive search).
+    function findLineInRange(sdpLines, startLine, endLine, prefix, substr) {
+        var realEndLine = endLine !== -1 ? endLine : sdpLines.length;
+        for (var i = startLine; i < realEndLine; ++i) {
+            if (sdpLines[i].indexOf(prefix) === 0) {
+                if (!substr ||
+                    sdpLines[i].toLowerCase().indexOf(substr.toLowerCase()) !== -1) {
+                    return i;
+                }
+            }
+        }
+        return null;
+    }
+
+    // Gets the codec payload type from an a=rtpmap:X line.
+    function getCodecPayloadType(sdpLine) {
+        var pattern = new RegExp('a=rtpmap:(\\d+) \\w+\\/\\d+');
+        var result = sdpLine.match(pattern);
+        return (result && result.length === 2) ? result[1] : null;
+    }
+
+    function setVideoBitrates(sdp, params) {
+        params = params || {};
+        var xgoogle_min_bitrate = params.min;
+        var xgoogle_max_bitrate = params.max;
+
+        var sdpLines = sdp.split('\r\n');
+
+        // VP8
+        var vp8Index = findLine(sdpLines, 'a=rtpmap', 'VP8/90000');
+        var vp8Payload;
+        if (vp8Index) {
+            vp8Payload = getCodecPayloadType(sdpLines[vp8Index]);
+        }
+
+        if (!vp8Payload) {
+            return sdp;
+        }
+
+        var rtxIndex = findLine(sdpLines, 'a=rtpmap', 'rtx/90000');
+        var rtxPayload;
+        if (rtxIndex) {
+            rtxPayload = getCodecPayloadType(sdpLines[rtxIndex]);
+        }
+
+        if (!rtxIndex) {
+            return sdp;
+        }
+
+        var rtxFmtpLineIndex = findLine(sdpLines, 'a=fmtp:' + rtxPayload.toString());
+        if (rtxFmtpLineIndex !== null) {
+            var appendrtxNext = '\r\n';
+            appendrtxNext += 'a=fmtp:' + vp8Payload + ' x-google-min-bitrate=' + (xgoogle_min_bitrate || '228') + '; x-google-max-bitrate=' + (xgoogle_max_bitrate || '228');
+            sdpLines[rtxFmtpLineIndex] = sdpLines[rtxFmtpLineIndex].concat(appendrtxNext);
+            sdp = sdpLines.join('\r\n');
+        }
+
+        return sdp;
+    }
+
+    function setOpusAttributes(sdp, params) {
+        params = params || {};
+
+        var sdpLines = sdp.split('\r\n');
+
+        // Opus
+        var opusIndex = findLine(sdpLines, 'a=rtpmap', 'opus/48000');
+        var opusPayload;
+        if (opusIndex) {
+            opusPayload = getCodecPayloadType(sdpLines[opusIndex]);
+        }
+
+        if (!opusPayload) {
+            return sdp;
+        }
+
+        var opusFmtpLineIndex = findLine(sdpLines, 'a=fmtp:' + opusPayload.toString());
+        if (opusFmtpLineIndex === null) {
+            return sdp;
+        }
+
+        var appendOpusNext = '';
+        appendOpusNext += '; stereo=' + (typeof params.stereo != 'undefined' ? params.stereo : '1');
+        appendOpusNext += '; sprop-stereo=' + (typeof params['sprop-stereo'] != 'undefined' ? params['sprop-stereo'] : '1');
+
+        if (typeof params.maxaveragebitrate != 'undefined') {
+            appendOpusNext += '; maxaveragebitrate=' + (params.maxaveragebitrate || 128 * 1024 * 8);
+        }
+
+        if (typeof params.maxplaybackrate != 'undefined') {
+            appendOpusNext += '; maxplaybackrate=' + (params.maxplaybackrate || 128 * 1024 * 8);
+        }
+
+        if (typeof params.cbr != 'undefined') {
+            appendOpusNext += '; cbr=' + (typeof params.cbr != 'undefined' ? params.cbr : '1');
+        }
+
+        if (typeof params.useinbandfec != 'undefined') {
+            appendOpusNext += '; useinbandfec=' + params.useinbandfec;
+        }
+
+        if (typeof params.usedtx != 'undefined') {
+            appendOpusNext += '; usedtx=' + params.usedtx;
+        }
+
+        if (typeof params.maxptime != 'undefined') {
+            appendOpusNext += '\r\na=maxptime:' + params.maxptime;
+        }
+
+        sdpLines[opusFmtpLineIndex] = sdpLines[opusFmtpLineIndex].concat(appendOpusNext);
+
+        sdp = sdpLines.join('\r\n');
+        return sdp;
+    }
+
+    return {
+        setApplicationSpecificBandwidth: function(sdp, bandwidth, isScreen) {
+            return setBAS(sdp, bandwidth, isScreen);
+        },
+        setVideoBitrates: function(sdp, params) {
+            return setVideoBitrates(sdp, params);
+        },
+        setOpusAttributes: function(sdp, params) {
+            return setOpusAttributes(sdp, params);
+        }
+    };
+})();
+
+
+
+
+
+
 
 var streamConstraints ={audio:{ echoCancellation: true },video:true};
 var isCaller;
@@ -37,6 +220,12 @@ btnGoRoom.onclick=function(){
   }                        
 }
 
+inputRoomNumber.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   document.getElementById("goRoom").click();
+  }
+});
 
 socket.on('created',function(room){
   navigator.mediaDevices.getUserMedia(streamConstraints).then(function(stream){
@@ -103,6 +292,7 @@ socket.on('candidate',function(event){
   rtcPeerConnection.addIceCandidate(candidate);
 });
 
+
 function onAddStream(event){
   document.getElementById('remoteVideo').srcObject = event.stream;
     remoteStream = event.stream;
@@ -168,7 +358,7 @@ function download() {
   // fs.writeFile('video.webm', blob, () => console.log('video saved!') );
   // console.log(blob)
     // var xmlhttp = new XMLHttpRequest();
-     var url = "https://192.168.200.72/getdownload";//auto download
+     var url = "http://localhost:3000/getdownload";//auto download
     // xmlhttp.onreadystatechange = function (res) {
     //   if (this.readyState == 4 && this.status == 200) {
     //     document.write(this.responseText);
@@ -181,7 +371,6 @@ function download() {
   xhr.open('POST', url, true);//auto download
   xhr.send(blob);//auto download
   alert('video saved in local');//auto download
-
   // var url =  URL.createObjectURL(blob);//normal download
   // var a = document.createElement("a");
   // document.body.appendChild(a);
@@ -252,7 +441,7 @@ var video = document.getElementById('remoteVideo')
     }, false);
 
     document.getElementById('startbutton').addEventListener('click', function(ev){
-      url = "https://192.168.200.72/uploadPicture";
+      url = "http://localhost:3000/uploadPicture";
       upload_picture(url);
       ev.preventDefault();
     }, false);
@@ -332,7 +521,7 @@ var video = document.getElementById('remoteVideo')
   ///////////////////////////////////capture Pan image/////////////////////////////////////////////////
 var video1 = document.getElementById('remoteVideo')
 document.getElementById('pan').addEventListener('click', function(ev){
-  url1 = "https://192.168.200.72/uploadPicture1";
+  url1 = "http://localhost:3000/uploadPicture1";
       upload_picture1(url1);
       ev.preventDefault();
     }, false);
@@ -343,6 +532,8 @@ clearphoto1();
     context1.fillStyle = "#AAA";
     context1.fillRect(0, 0, canvas1.width, canvas1.height);
   }
+
+
 
 // function takepicture1() {
 //     var context1 = canvas1.getContext('2d');
@@ -405,7 +596,7 @@ clearphoto1();
 
   var video1 = document.getElementById('remoteVideo');
 document.getElementById('Signature').addEventListener('click', function(ev){
-  url2 = "https://192.168.200.72/uploadPicture2";
+  url2 = "http://localhost:3000/uploadPicture2";
       upload_picture2(url2);
       ev.preventDefault();
     }, false);
@@ -482,12 +673,13 @@ function dropcall() {
   }
 
 
-
-///////////////////////////////////////////mute and unmute button //////////////////////////////
+///////////////////////////////////////////mute and unmute button /////////////////////////////////
 
 function mute(){
-    alert("muted")
     localStream.getAudioTracks()[0].enabled = !(localStream.getAudioTracks()[0].enabled);
-    console.log("muted")
+    console.log('muted');
+    $('.btn-secondary span').toggleClass('fa-microphone fa-microphone-slash');
+   
 }
+
 
